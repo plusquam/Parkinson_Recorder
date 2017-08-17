@@ -44,8 +44,12 @@
             this.newMeasureButton = new System.Windows.Forms.Button();
             this.openMeasureButton = new System.Windows.Forms.Button();
             this.saveMeasureButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.startStopMeasureButton = new System.Windows.Forms.Button();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.showFrequencyChartButton = new System.Windows.Forms.Button();
+            this.showSignalsChartButton = new System.Windows.Forms.Button();
+            this.signalsListBox = new System.Windows.Forms.ListBox();
+            this.splitter2 = new System.Windows.Forms.Splitter();
             this.menuStrip.SuspendLayout();
             this.mainWindowTabControl.SuspendLayout();
             this.recorderViewTabPage.SuspendLayout();
@@ -108,24 +112,32 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 6;
+            this.tableLayoutPanel2.ColumnCount = 10;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 68F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 18F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
             this.tableLayoutPanel2.Controls.Add(this.newMeasureButton, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.openMeasureButton, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.saveMeasureButton, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button1, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.startStopMeasureButton, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.splitter1, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.showFrequencyChartButton, 5, 0);
+            this.tableLayoutPanel2.Controls.Add(this.showSignalsChartButton, 6, 0);
+            this.tableLayoutPanel2.Controls.Add(this.signalsListBox, 7, 0);
+            this.tableLayoutPanel2.Controls.Add(this.splitter2, 8, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(878, 88);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(878, 108);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -185,7 +197,7 @@
             this.newMeasureButton.ImageIndex = 0;
             this.newMeasureButton.Location = new System.Drawing.Point(3, 3);
             this.newMeasureButton.Name = "newMeasureButton";
-            this.newMeasureButton.Size = new System.Drawing.Size(59, 74);
+            this.newMeasureButton.Size = new System.Drawing.Size(59, 76);
             this.newMeasureButton.TabIndex = 0;
             this.newMeasureButton.Text = "newMeasureButton";
             this.newMeasureButton.UseVisualStyleBackColor = true;
@@ -195,7 +207,7 @@
             this.openMeasureButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.openMeasureButton.Location = new System.Drawing.Point(68, 3);
             this.openMeasureButton.Name = "openMeasureButton";
-            this.openMeasureButton.Size = new System.Drawing.Size(62, 74);
+            this.openMeasureButton.Size = new System.Drawing.Size(62, 76);
             this.openMeasureButton.TabIndex = 1;
             this.openMeasureButton.Text = "openMeasureButton";
             this.openMeasureButton.UseVisualStyleBackColor = true;
@@ -205,28 +217,67 @@
             this.saveMeasureButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveMeasureButton.Location = new System.Drawing.Point(136, 3);
             this.saveMeasureButton.Name = "saveMeasureButton";
-            this.saveMeasureButton.Size = new System.Drawing.Size(55, 74);
+            this.saveMeasureButton.Size = new System.Drawing.Size(55, 76);
             this.saveMeasureButton.TabIndex = 2;
             this.saveMeasureButton.Text = "saveMeasureButton";
             this.saveMeasureButton.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // startStopMeasureButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(215, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(58, 74);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.startStopMeasureButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.startStopMeasureButton.Location = new System.Drawing.Point(205, 3);
+            this.startStopMeasureButton.Name = "startStopMeasureButton";
+            this.startStopMeasureButton.Size = new System.Drawing.Size(68, 76);
+            this.startStopMeasureButton.TabIndex = 3;
+            this.startStopMeasureButton.Text = "startStopMeasure";
+            this.startStopMeasureButton.UseVisualStyleBackColor = true;
             // 
             // splitter1
             // 
+            this.splitter1.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitter1.Location = new System.Drawing.Point(197, 3);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 74);
+            this.splitter1.Size = new System.Drawing.Size(2, 76);
             this.splitter1.TabIndex = 4;
             this.splitter1.TabStop = false;
+            // 
+            // showFrequencyChartButton
+            // 
+            this.showFrequencyChartButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.showFrequencyChartButton.Location = new System.Drawing.Point(279, 3);
+            this.showFrequencyChartButton.Name = "showFrequencyChartButton";
+            this.showFrequencyChartButton.Size = new System.Drawing.Size(61, 76);
+            this.showFrequencyChartButton.TabIndex = 5;
+            this.showFrequencyChartButton.Text = "showFrequencyChart";
+            this.showFrequencyChartButton.UseVisualStyleBackColor = true;
+            // 
+            // showSignalsChartButton
+            // 
+            this.showSignalsChartButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.showSignalsChartButton.Location = new System.Drawing.Point(346, 3);
+            this.showSignalsChartButton.Name = "showSignalsChartButton";
+            this.showSignalsChartButton.Size = new System.Drawing.Size(65, 76);
+            this.showSignalsChartButton.TabIndex = 6;
+            this.showSignalsChartButton.Text = "showSignalsChart";
+            this.showSignalsChartButton.UseVisualStyleBackColor = true;
+            // 
+            // signalsListBox
+            // 
+            this.signalsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.signalsListBox.FormattingEnabled = true;
+            this.signalsListBox.Location = new System.Drawing.Point(417, 3);
+            this.signalsListBox.Name = "signalsListBox";
+            this.signalsListBox.Size = new System.Drawing.Size(104, 76);
+            this.signalsListBox.TabIndex = 7;
+            // 
+            // splitter2
+            // 
+            this.splitter2.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.splitter2.Location = new System.Drawing.Point(527, 3);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(2, 76);
+            this.splitter2.TabIndex = 8;
+            this.splitter2.TabStop = false;
             // 
             // ProgramMainWindow
             // 
@@ -266,8 +317,12 @@
         private System.Windows.Forms.Button newMeasureButton;
         private System.Windows.Forms.Button openMeasureButton;
         private System.Windows.Forms.Button saveMeasureButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button startStopMeasureButton;
         private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.Button showFrequencyChartButton;
+        private System.Windows.Forms.Button showSignalsChartButton;
+        private System.Windows.Forms.ListBox signalsListBox;
+        private System.Windows.Forms.Splitter splitter2;
     }
 }
 
