@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parkinson_Recorder
 {
@@ -10,6 +6,7 @@ namespace Parkinson_Recorder
     {
         private Random random = new Random();
         private static TimeSpan startTime = DateTime.Now.TimeOfDay;
+
 
         public double[] generateData()
         {
@@ -24,5 +21,11 @@ namespace Parkinson_Recorder
             return data;
         }
 
-    }
+        public void resetStartTime()
+        {
+            startTime = DateTime.Now.TimeOfDay;
+        }
+
+
+}
 }

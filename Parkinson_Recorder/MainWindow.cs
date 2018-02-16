@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -15,6 +9,7 @@ namespace Parkinson_Recorder
     {
         private static int chartPointIndex = 0;
         private static double[] newData = new double[2];
+        private RealTimeData dataChartsTimerInstance = new RealTimeData();
 
         public ProgramMainWindow()
         {
@@ -38,6 +33,7 @@ namespace Parkinson_Recorder
             else
             {
                 this.signalTimeChart.Enabled = true;
+                this.dataChartsTimerInstance.resetStartTime();
                 this.signalTimeChart.Series[0].Points.Clear();
                 //this.signalFrequencyChart.Enabled = true;
                 dataChartsTimer.Enabled = true;
@@ -76,6 +72,7 @@ namespace Parkinson_Recorder
             // Adjust Y & X axis scale
             signalTimeChart.ResetAutoValues();
 
+            // Set new maximum value of the X axis
             if (signalTimeChart.ChartAreas[0].AxisX.Maximum < newData[0])
             {
                 signalTimeChart.ChartAreas[0].AxisX.Maximum = newData[0];
@@ -100,8 +97,7 @@ namespace Parkinson_Recorder
        
         private void dataChartsTimer_Tick(object sender, EventArgs e)
         {
-            RealTimeData timeSignalInstance = new RealTimeData();
-            newData = timeSignalInstance.generateData();
+            newData = dataChartsTimerInstance.generateData();
 
             // Define some variables
             signalTimeChart.Series[0].Points.AddXY(newData[0], newData[1]);
