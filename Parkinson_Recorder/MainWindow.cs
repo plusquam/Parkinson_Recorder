@@ -16,12 +16,12 @@ namespace Parkinson_Recorder
             InitializeComponent();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void startStopMeasureButton_Click(object sender, EventArgs e)
+        private void StartStopMeasureButton_Click(object sender, EventArgs e)
         {
             if (this.signalTimeChart.Enabled)
             {
@@ -33,7 +33,7 @@ namespace Parkinson_Recorder
             else
             {
                 this.signalTimeChart.Enabled = true;
-                this.dataChartsTimerInstance.resetStartTime();
+                this.dataChartsTimerInstance.ResetStartTime();
                 this.signalTimeChart.Series[0].Points.Clear();
                 //this.signalFrequencyChart.Enabled = true;
                 dataChartsTimer.Enabled = true;
@@ -41,7 +41,7 @@ namespace Parkinson_Recorder
             }
         }
 
-        private void showFrequencyChartButton_Click(object sender, EventArgs e)
+        private void ShowFrequencyChartButton_Click(object sender, EventArgs e)
         {
             if(chartsSplitContainer.Panel2Collapsed == false)
             {
@@ -53,7 +53,7 @@ namespace Parkinson_Recorder
             }
         }
 
-        private void showSignalsChartButton_Click(object sender, EventArgs e)
+        private void ShowSignalsChartButton_Click(object sender, EventArgs e)
         {
             if(chartsSplitContainer.Panel1Collapsed == false)
             {
@@ -65,7 +65,7 @@ namespace Parkinson_Recorder
             }
         }
 
-        private void chartsRefreshingTimer_Tick(object sender, EventArgs e)
+        private void ChartsRefreshingTimer_Tick(object sender, EventArgs e)
         {
             int numberOfPointsInChart = 200;
 
@@ -95,9 +95,9 @@ namespace Parkinson_Recorder
         }
 
        
-        private void dataChartsTimer_Tick(object sender, EventArgs e)
+        private void DataChartsTimer_Tick(object sender, EventArgs e)
         {
-            newData = dataChartsTimerInstance.generateData();
+            newData = dataChartsTimerInstance.GenerateData();
 
             // Define some variables
             signalTimeChart.Series[0].Points.AddXY(newData[0], newData[1]);

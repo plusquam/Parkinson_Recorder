@@ -4,11 +4,15 @@ namespace Parkinson_Recorder
 {
     class RealTimeData
     {
-        private Random random = new Random();
+        private Random random;
         private static TimeSpan startTime = DateTime.Now.TimeOfDay;
 
+        public RealTimeData()
+        {
+            this.random = new Random();
+        }
 
-        public double[] generateData()
+        public double[] GenerateData()
         {
             
             double[] data = new double[2];
@@ -21,7 +25,7 @@ namespace Parkinson_Recorder
             return data;
         }
 
-        public void resetStartTime()
+        public void ResetStartTime()
         {
             startTime = DateTime.Now.TimeOfDay;
         }

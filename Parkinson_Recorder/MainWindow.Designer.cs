@@ -96,7 +96,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.exitToolStripMenuItem.Text = "Wyjście";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // mainWindowTabControl
             // 
@@ -257,7 +257,7 @@
             this.startStopMeasureButton.TabIndex = 3;
             this.startStopMeasureButton.Text = "startStopMeasure";
             this.startStopMeasureButton.UseVisualStyleBackColor = true;
-            this.startStopMeasureButton.Click += new System.EventHandler(this.startStopMeasureButton_Click);
+            this.startStopMeasureButton.Click += new System.EventHandler(this.StartStopMeasureButton_Click);
             // 
             // splitter1
             // 
@@ -277,7 +277,7 @@
             this.showFrequencyChartButton.TabIndex = 5;
             this.showFrequencyChartButton.Text = "showFrequencyChart";
             this.showFrequencyChartButton.UseVisualStyleBackColor = true;
-            this.showFrequencyChartButton.Click += new System.EventHandler(this.showFrequencyChartButton_Click);
+            this.showFrequencyChartButton.Click += new System.EventHandler(this.ShowFrequencyChartButton_Click);
             // 
             // showSignalsChartButton
             // 
@@ -288,7 +288,7 @@
             this.showSignalsChartButton.TabIndex = 6;
             this.showSignalsChartButton.Text = "showSignalsChart";
             this.showSignalsChartButton.UseVisualStyleBackColor = true;
-            this.showSignalsChartButton.Click += new System.EventHandler(this.showSignalsChartButton_Click);
+            this.showSignalsChartButton.Click += new System.EventHandler(this.ShowSignalsChartButton_Click);
             // 
             // splitter2
             // 
@@ -365,12 +365,12 @@
             // chartsRefreshingTimer
             // 
             this.chartsRefreshingTimer.Interval = 20;
-            this.chartsRefreshingTimer.Tick += new System.EventHandler(this.chartsRefreshingTimer_Tick);
+            this.chartsRefreshingTimer.Tick += new System.EventHandler(this.ChartsRefreshingTimer_Tick);
             // 
             // dataChartsTimer
             // 
             this.dataChartsTimer.Interval = 1;
-            this.dataChartsTimer.Tick += new System.EventHandler(this.dataChartsTimer_Tick);
+            this.dataChartsTimer.Tick += new System.EventHandler(this.DataChartsTimer_Tick);
             // 
             // ProgramMainWindow
             // 
