@@ -8,12 +8,12 @@ namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private int chartPointIndex = 0;
-        private double[] newData = new double[2];
-        private RealTimeData dataChartsTimerInstance = new RealTimeData();
-        private double[,] fftData = new double[2, 512];
-        private int numberOfPointsInChart = 1024;
-        private Stopwatch stopwatch = new Stopwatch();
+        private int _chartPointIndex = 0;
+        private double[] _newData = new double[2];
+        private RealTimeData _dataChartsTimerInstance = new RealTimeData();
+        private double[,] _fftData = new double[2, 512];
+        private int _numberOfPointsInChart = 1024;
+        private Stopwatch _stopwatch = new Stopwatch();
 
         public ProgramMainWindow()
         {
@@ -37,7 +37,7 @@ namespace Parkinson_Recorder
             else
             {
                 this.signalTimeChart.Enabled = true;
-                this.dataChartsTimerInstance.ResetStartTime();
+                this._dataChartsTimerInstance.ResetStartTime();
                 this.signalTimeChart.Series[0].Points.Clear();
                 this.signalFrequencyChart.Enabled = true;
                 dataChartsTimer.Enabled = true;
@@ -73,14 +73,14 @@ namespace Parkinson_Recorder
 
         private void ChartsRefreshingTimer_Tick(object sender, EventArgs e)
         {
-            stopwatch.Restart();
+            _stopwatch.Restart();
 
             // Adjust Y & X axis scale
             //signalTimeChart.ResetAutoValues();
             int counterTemp = 0;
 
             // Keep a constant number of points by removing them from the left
-            while (signalTimeChart.Series[0].Points.Count > numberOfPointsInChart)
+            while (signalTimeChart.Series[0].Points.Count > _numberOfPointsInChart)
             {
                 // Remove data points on the left side
                 counterTemp++;
@@ -94,24 +94,29 @@ namespace Parkinson_Recorder
             // Redraw chart
             signalTimeChart.Invalidate();
 
-            long microseconds = stopwatch.ElapsedTicks / (Stopwatch.Frequency / 1000000L);
+            long microseconds = _stopwatch.ElapsedTicks / (Stopwatch.Frequency / 1000000L);
             //Console.WriteLine("Operation completed in: " + microseconds + " (us)");
             //Console.WriteLine("count: " + counterTemp);
         }
       
         private void DataChartsTimer_Tick(object sender, EventArgs e)
         {
-            newData = dataChartsTimerInstance.GenerateData();
+            _newData = _dataChartsTimerInstance.GenerateData();
 
             // Define some variables
-            signalTimeChart.Series[0].Points.AddXY(newData[0], newData[1]);
-            ++chartPointIndex;
+            signalTimeChart.Series[0].Points.AddXY(_newData[0], _newData[1]);
+            ++_chartPointIndex;
 
-            long microseconds = stopwatch.ElapsedMilliseconds; // (Stopwatch.Frequency / 1000000L);
+            long microseconds = _stopwatch.ElapsedMilliseconds; // (Stopwatch.Frequency / 1000000L);
             Console.WriteLine("tratatata: " + microseconds + " (us)");
         }
 
         private void newMeasureButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

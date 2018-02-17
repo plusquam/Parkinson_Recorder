@@ -5,28 +5,28 @@ namespace Parkinson_Recorder
 {
     class RealTimeData
     {
-        private Random random;
-        private Stopwatch stopwatch = new Stopwatch();
+        private Random _random;
+        private Stopwatch _stopwatch = new Stopwatch();
 
         public RealTimeData()
         {
-            this.random = new Random();
+            this._random = new Random();
         }
 
         public double[] GenerateData()
         {
             double[] data = new double[2];
 
-            data[0] = stopwatch.ElapsedMilliseconds;
-            data[1] = random.Next(-2000, 2000);
+            data[0] = _stopwatch.ElapsedMilliseconds;
+            data[1] = _random.Next(-2000, 2000);
 
             return data;
         }
 
         public void ResetStartTime()
         {
-            stopwatch.Reset();
-            stopwatch.Start();
+            _stopwatch.Reset();
+            _stopwatch.Start();
         }
 
 
