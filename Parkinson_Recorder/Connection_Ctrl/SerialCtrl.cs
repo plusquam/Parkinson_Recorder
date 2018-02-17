@@ -14,13 +14,15 @@ namespace Parkinson_Recorder.Connection_Ctrl
 
         public SerialCtrl()
         {
+            // Get a list of serial port names.
+            _serialNames = SerialPort.GetPortNames();
+
             _serialPort.BaudRate = 9600;
         }
 
         public string[] GetSerialPortsNames()
         {
-            // Get a list of serial port names.
-            _serialNames = SerialPort.GetPortNames();
+            
 
             Console.WriteLine("The following serial ports were found:");
 
