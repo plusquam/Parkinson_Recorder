@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend16 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramMainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -149,19 +149,19 @@
             // signalTimeChart
             // 
             this.signalTimeChart.BackColor = System.Drawing.Color.DarkRed;
-            chartArea15.Name = "ChartArea1";
-            this.signalTimeChart.ChartAreas.Add(chartArea15);
+            chartArea1.Name = "ChartArea1";
+            this.signalTimeChart.ChartAreas.Add(chartArea1);
             this.signalTimeChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalTimeChart.Enabled = false;
-            legend15.Name = "Legend1";
-            this.signalTimeChart.Legends.Add(legend15);
+            legend1.Name = "Legend1";
+            this.signalTimeChart.Legends.Add(legend1);
             this.signalTimeChart.Location = new System.Drawing.Point(0, 0);
             this.signalTimeChart.Name = "signalTimeChart";
-            series15.ChartArea = "ChartArea1";
-            series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series15.Legend = "Legend1";
-            series15.Name = "Series1";
-            this.signalTimeChart.Series.Add(series15);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.signalTimeChart.Series.Add(series1);
             this.signalTimeChart.Size = new System.Drawing.Size(878, 308);
             this.signalTimeChart.TabIndex = 4;
             this.signalTimeChart.Text = "signalTimeChart";
@@ -169,18 +169,18 @@
             // signalFrequencyChart
             // 
             this.signalFrequencyChart.BackColor = System.Drawing.Color.ForestGreen;
-            chartArea16.Name = "ChartArea1";
-            this.signalFrequencyChart.ChartAreas.Add(chartArea16);
+            chartArea2.Name = "ChartArea1";
+            this.signalFrequencyChart.ChartAreas.Add(chartArea2);
             this.signalFrequencyChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalFrequencyChart.Enabled = false;
-            legend16.Name = "Legend1";
-            this.signalFrequencyChart.Legends.Add(legend16);
+            legend2.Name = "Legend1";
+            this.signalFrequencyChart.Legends.Add(legend2);
             this.signalFrequencyChart.Location = new System.Drawing.Point(0, 0);
             this.signalFrequencyChart.Name = "signalFrequencyChart";
-            series16.ChartArea = "ChartArea1";
-            series16.Legend = "Legend1";
-            series16.Name = "Series1";
-            this.signalFrequencyChart.Series.Add(series16);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.signalFrequencyChart.Series.Add(series2);
             this.signalFrequencyChart.Size = new System.Drawing.Size(878, 304);
             this.signalFrequencyChart.TabIndex = 5;
             this.signalFrequencyChart.Text = "chart1";
@@ -227,6 +227,7 @@
             this.newMeasureButton.TabIndex = 0;
             this.newMeasureButton.Text = "newMeasureButton";
             this.newMeasureButton.UseVisualStyleBackColor = true;
+            this.newMeasureButton.Click += new System.EventHandler(this.newMeasureButton_Click);
             // 
             // openMeasureButton
             // 
@@ -364,7 +365,7 @@
             // 
             // chartsRefreshingTimer
             // 
-            this.chartsRefreshingTimer.Interval = 20;
+            this.chartsRefreshingTimer.Interval = 500;
             this.chartsRefreshingTimer.Tick += new System.EventHandler(this.ChartsRefreshingTimer_Tick);
             // 
             // dataChartsTimer

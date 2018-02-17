@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private static int chartPointIndex = 0;
-        private static double[] newData = new double[2];
+        private int chartPointIndex = 0;
+        private double[] newData = new double[2];
         private RealTimeData dataChartsTimerInstance = new RealTimeData();
+        private double[,] fftData = new double[2, 512];
+        private int numberOfPointsInChart = 1024;
+        private Stopwatch stopwatch = new Stopwatch();
 
         public ProgramMainWindow()
         {
@@ -26,7 +30,7 @@ namespace Parkinson_Recorder
             if (this.signalTimeChart.Enabled)
             {
                 this.signalTimeChart.Enabled = false;
-                //this.signalFrequencyChart.Enabled = false;
+                this.signalFrequencyChart.Enabled = false;
                 dataChartsTimer.Enabled = false;
                 chartsRefreshingTimer.Enabled = false;
             }
@@ -35,9 +39,11 @@ namespace Parkinson_Recorder
                 this.signalTimeChart.Enabled = true;
                 this.dataChartsTimerInstance.ResetStartTime();
                 this.signalTimeChart.Series[0].Points.Clear();
-                //this.signalFrequencyChart.Enabled = true;
+                this.signalFrequencyChart.Enabled = true;
                 dataChartsTimer.Enabled = true;
                 chartsRefreshingTimer.Enabled = true;
+                dataChartsTimer.Start();
+                chartsRefreshingTimer.Start();
             }
         }
 
@@ -67,22 +73,17 @@ namespace Parkinson_Recorder
 
         private void ChartsRefreshingTimer_Tick(object sender, EventArgs e)
         {
-            int numberOfPointsInChart = 200;
+            stopwatch.Restart();
 
             // Adjust Y & X axis scale
-            signalTimeChart.ResetAutoValues();
-
-            // Set new maximum value of the X axis
-            if (signalTimeChart.ChartAreas[0].AxisX.Maximum < newData[0])
-            {
-                signalTimeChart.ChartAreas[0].AxisX.Maximum = newData[0];
-            }
+            //signalTimeChart.ResetAutoValues();
+            int counterTemp = 0;
 
             // Keep a constant number of points by removing them from the left
             while (signalTimeChart.Series[0].Points.Count > numberOfPointsInChart)
             {
                 // Remove data points on the left side
-
+                counterTemp++;
                 signalTimeChart.Series[0].Points.RemoveAt(0);
             }
 
@@ -92,9 +93,12 @@ namespace Parkinson_Recorder
 
             // Redraw chart
             signalTimeChart.Invalidate();
-        }
 
-       
+            long microseconds = stopwatch.ElapsedTicks / (Stopwatch.Frequency / 1000000L);
+            //Console.WriteLine("Operation completed in: " + microseconds + " (us)");
+            //Console.WriteLine("count: " + counterTemp);
+        }
+      
         private void DataChartsTimer_Tick(object sender, EventArgs e)
         {
             newData = dataChartsTimerInstance.GenerateData();
@@ -102,6 +106,14 @@ namespace Parkinson_Recorder
             // Define some variables
             signalTimeChart.Series[0].Points.AddXY(newData[0], newData[1]);
             ++chartPointIndex;
+
+            long microseconds = stopwatch.ElapsedMilliseconds; // (Stopwatch.Frequency / 1000000L);
+            Console.WriteLine("tratatata: " + microseconds + " (us)");
+        }
+
+        private void newMeasureButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

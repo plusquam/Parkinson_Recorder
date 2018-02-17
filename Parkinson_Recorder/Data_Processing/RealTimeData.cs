@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Parkinson_Recorder
 {
     class RealTimeData
     {
         private Random random;
-        private static TimeSpan startTime = DateTime.Now.TimeOfDay;
+        private Stopwatch stopwatch = new Stopwatch();
 
         public RealTimeData()
         {
@@ -14,12 +15,9 @@ namespace Parkinson_Recorder
 
         public double[] GenerateData()
         {
-            
             double[] data = new double[2];
-            TimeSpan passedTime = DateTime.Now.TimeOfDay - startTime;
 
-            data[0] = passedTime.TotalMilliseconds / 1000;
-
+            data[0] = stopwatch.ElapsedMilliseconds;
             data[1] = random.Next(-2000, 2000);
 
             return data;
@@ -27,7 +25,8 @@ namespace Parkinson_Recorder
 
         public void ResetStartTime()
         {
-            startTime = DateTime.Now.TimeOfDay;
+            stopwatch.Reset();
+            stopwatch.Start();
         }
 
 
