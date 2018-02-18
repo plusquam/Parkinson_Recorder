@@ -18,6 +18,8 @@ namespace Parkinson_Recorder
         public ProgramMainWindow()
         {
             InitializeComponent();
+            SerialPortsListBox.DataSource = _serialCtrl.GetSerialPortsNames();
+            BaudListBox.DataSource = _serialCtrl.BaudRates;
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,18 +110,15 @@ namespace Parkinson_Recorder
             ++_chartPointIndex;
 
             long microseconds = _stopwatch.ElapsedMilliseconds; // (Stopwatch.Frequency / 1000000L);
-            Console.WriteLine("tratatata: " + microseconds + " (us)");
+            Console.WriteLine("Operation completed in: " + microseconds + " (ms)");
         }
 
         private void newMeasureButton_Click(object sender, EventArgs e)
         {
-
+            _serialCtrl.SendString("test");
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
 
-        }
     }
 
 

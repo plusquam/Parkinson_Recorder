@@ -6,5 +6,35 @@ namespace Parkinson_Recorder
     public partial class ProgramMainWindow
     {
         private Parkinson_Recorder.Connection_Ctrl.SerialCtrl _serialCtrl = new Parkinson_Recorder.Connection_Ctrl.SerialCtrl();
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            string portName = SerialPortsListBox.SelectedValue.ToString();
+            Console.WriteLine("Selected port name: " + portName);
+
+            string baud = BaudListBox.SelectedValue.ToString();
+            Console.WriteLine("Selected baud: " + baud);
+
+            if (!_serialCtrl.isConnected)
+                _serialCtrl.InitializePort(portName, int.Parse(baud));
+            else if (portName != _serialCtrl.SerialName || baud != _serialCtrl.BaudRate.ToString())
+            {
+                _serialCtrl.Disconnect();
+                _serialCtrl.InitializePort(portName, int.Parse(baud));
+            }
+
+            DisconnectButton.Enabled = true;
+        }
+
+        private void ReScanButton_Click(object sender, EventArgs e)
+        {
+            SerialPortsListBox.DataSource = _serialCtrl.GetSerialPortsNames();
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            _serialCtrl.Disconnect();
+            DisconnectButton.Enabled = false;
+        }
     }
 }

@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramMainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,17 +56,19 @@
             this.signalsChooseCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.communicationTabPage = new System.Windows.Forms.TabPage();
-            this.tabControlImageList = new System.Windows.Forms.ImageList(this.components);
-            this.mainWindowStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.chartsRefreshingTimer = new System.Windows.Forms.Timer(this.components);
-            this.dataChartsTimer = new System.Windows.Forms.Timer(this.components);
-            this.connectionSettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.ConnectionSettingsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PortNameLabel = new System.Windows.Forms.Label();
             this.BaudRateLabel = new System.Windows.Forms.Label();
             this.SerialPortsListBox = new System.Windows.Forms.ListBox();
             this.BaudListBox = new System.Windows.Forms.ListBox();
             this.ReScanButton = new System.Windows.Forms.Button();
+            this.ConnectButton = new System.Windows.Forms.Button();
+            this.DisconnectButton = new System.Windows.Forms.Button();
+            this.connectionSettingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.tabControlImageList = new System.Windows.Forms.ImageList(this.components);
+            this.mainWindowStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.chartsRefreshingTimer = new System.Windows.Forms.Timer(this.components);
+            this.dataChartsTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.mainWindowTabControl.SuspendLayout();
             this.recorderViewTabPage.SuspendLayout();
@@ -156,19 +158,19 @@
             // signalTimeChart
             // 
             this.signalTimeChart.BackColor = System.Drawing.Color.DarkRed;
-            chartArea5.Name = "ChartArea1";
-            this.signalTimeChart.ChartAreas.Add(chartArea5);
+            chartArea1.Name = "ChartArea1";
+            this.signalTimeChart.ChartAreas.Add(chartArea1);
             this.signalTimeChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalTimeChart.Enabled = false;
-            legend5.Name = "Legend1";
-            this.signalTimeChart.Legends.Add(legend5);
+            legend1.Name = "Legend1";
+            this.signalTimeChart.Legends.Add(legend1);
             this.signalTimeChart.Location = new System.Drawing.Point(0, 0);
             this.signalTimeChart.Name = "signalTimeChart";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.signalTimeChart.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.signalTimeChart.Series.Add(series1);
             this.signalTimeChart.Size = new System.Drawing.Size(878, 308);
             this.signalTimeChart.TabIndex = 4;
             this.signalTimeChart.Text = "signalTimeChart";
@@ -176,18 +178,18 @@
             // signalFrequencyChart
             // 
             this.signalFrequencyChart.BackColor = System.Drawing.Color.ForestGreen;
-            chartArea6.Name = "ChartArea1";
-            this.signalFrequencyChart.ChartAreas.Add(chartArea6);
+            chartArea2.Name = "ChartArea1";
+            this.signalFrequencyChart.ChartAreas.Add(chartArea2);
             this.signalFrequencyChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalFrequencyChart.Enabled = false;
-            legend6.Name = "Legend1";
-            this.signalFrequencyChart.Legends.Add(legend6);
+            legend2.Name = "Legend1";
+            this.signalFrequencyChart.Legends.Add(legend2);
             this.signalFrequencyChart.Location = new System.Drawing.Point(0, 0);
             this.signalFrequencyChart.Name = "signalFrequencyChart";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.signalFrequencyChart.Series.Add(series6);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.signalFrequencyChart.Series.Add(series2);
             this.signalFrequencyChart.Size = new System.Drawing.Size(878, 304);
             this.signalFrequencyChart.TabIndex = 5;
             this.signalFrequencyChart.Text = "chart1";
@@ -318,6 +320,7 @@
             this.signalsChooseCheckedListBox.Name = "signalsChooseCheckedListBox";
             this.signalsChooseCheckedListBox.Size = new System.Drawing.Size(167, 76);
             this.signalsChooseCheckedListBox.TabIndex = 9;
+            this.signalsChooseCheckedListBox.Visible = false;
             // 
             // tableLayoutPanel1
             // 
@@ -347,6 +350,113 @@
             this.communicationTabPage.Text = "communicationTabPage";
             this.communicationTabPage.UseVisualStyleBackColor = true;
             // 
+            // ConnectionSettingsTableLayoutPanel
+            // 
+            this.ConnectionSettingsTableLayoutPanel.ColumnCount = 3;
+            this.ConnectionSettingsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.ConnectionSettingsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.ConnectionSettingsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.PortNameLabel, 0, 0);
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.BaudRateLabel, 0, 1);
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.SerialPortsListBox, 1, 0);
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.BaudListBox, 1, 1);
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.ReScanButton, 2, 0);
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.ConnectButton, 1, 2);
+            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.DisconnectButton, 2, 2);
+            this.ConnectionSettingsTableLayoutPanel.Location = new System.Drawing.Point(3, 22);
+            this.ConnectionSettingsTableLayoutPanel.Name = "ConnectionSettingsTableLayoutPanel";
+            this.ConnectionSettingsTableLayoutPanel.RowCount = 3;
+            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.ConnectionSettingsTableLayoutPanel.Size = new System.Drawing.Size(478, 201);
+            this.ConnectionSettingsTableLayoutPanel.TabIndex = 0;
+            // 
+            // PortNameLabel
+            // 
+            this.PortNameLabel.AutoSize = true;
+            this.PortNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PortNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.PortNameLabel.Location = new System.Drawing.Point(3, 0);
+            this.PortNameLabel.Name = "PortNameLabel";
+            this.PortNameLabel.Size = new System.Drawing.Size(94, 60);
+            this.PortNameLabel.TabIndex = 0;
+            this.PortNameLabel.Text = "Serial Port:";
+            this.PortNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // BaudRateLabel
+            // 
+            this.BaudRateLabel.AutoSize = true;
+            this.BaudRateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BaudRateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.BaudRateLabel.Location = new System.Drawing.Point(3, 60);
+            this.BaudRateLabel.Name = "BaudRateLabel";
+            this.BaudRateLabel.Size = new System.Drawing.Size(94, 101);
+            this.BaudRateLabel.TabIndex = 1;
+            this.BaudRateLabel.Text = "Baud Rate:";
+            this.BaudRateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SerialPortsListBox
+            // 
+            this.SerialPortsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SerialPortsListBox.FormattingEnabled = true;
+            this.SerialPortsListBox.Location = new System.Drawing.Point(103, 3);
+            this.SerialPortsListBox.Name = "SerialPortsListBox";
+            this.SerialPortsListBox.Size = new System.Drawing.Size(194, 54);
+            this.SerialPortsListBox.TabIndex = 2;
+            // 
+            // BaudListBox
+            // 
+            this.BaudListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BaudListBox.FormattingEnabled = true;
+            this.BaudListBox.Location = new System.Drawing.Point(103, 63);
+            this.BaudListBox.Name = "BaudListBox";
+            this.BaudListBox.Size = new System.Drawing.Size(194, 95);
+            this.BaudListBox.TabIndex = 3;
+            // 
+            // ReScanButton
+            // 
+            this.ReScanButton.Location = new System.Drawing.Point(303, 3);
+            this.ReScanButton.Name = "ReScanButton";
+            this.ReScanButton.Size = new System.Drawing.Size(94, 34);
+            this.ReScanButton.TabIndex = 4;
+            this.ReScanButton.Text = "Re-Scan Ports";
+            this.ReScanButton.UseVisualStyleBackColor = true;
+            this.ReScanButton.Click += new System.EventHandler(this.ReScanButton_Click);
+            // 
+            // ConnectButton
+            // 
+            this.ConnectButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ConnectButton.Location = new System.Drawing.Point(103, 164);
+            this.ConnectButton.Name = "ConnectButton";
+            this.ConnectButton.Size = new System.Drawing.Size(155, 34);
+            this.ConnectButton.TabIndex = 5;
+            this.ConnectButton.Text = "Apply Settings and Connect";
+            this.ConnectButton.UseVisualStyleBackColor = true;
+            this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
+            // 
+            // DisconnectButton
+            // 
+            this.DisconnectButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.DisconnectButton.Enabled = false;
+            this.DisconnectButton.Location = new System.Drawing.Point(303, 164);
+            this.DisconnectButton.Name = "DisconnectButton";
+            this.DisconnectButton.Size = new System.Drawing.Size(75, 34);
+            this.DisconnectButton.TabIndex = 6;
+            this.DisconnectButton.Text = "Disconnect";
+            this.DisconnectButton.UseVisualStyleBackColor = true;
+            this.DisconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
+            // 
+            // connectionSettingsGroupBox
+            // 
+            this.connectionSettingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.connectionSettingsGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.connectionSettingsGroupBox.Name = "connectionSettingsGroupBox";
+            this.connectionSettingsGroupBox.Size = new System.Drawing.Size(878, 724);
+            this.connectionSettingsGroupBox.TabIndex = 0;
+            this.connectionSettingsGroupBox.TabStop = false;
+            this.connectionSettingsGroupBox.Text = "Connection Settings";
+            // 
             // tabControlImageList
             // 
             this.tabControlImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tabControlImageList.ImageStream")));
@@ -372,88 +482,6 @@
             // 
             this.dataChartsTimer.Interval = 1;
             this.dataChartsTimer.Tick += new System.EventHandler(this.DataChartsTimer_Tick);
-            // 
-            // connectionSettingsGroupBox
-            // 
-            this.connectionSettingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connectionSettingsGroupBox.Location = new System.Drawing.Point(3, 3);
-            this.connectionSettingsGroupBox.Name = "connectionSettingsGroupBox";
-            this.connectionSettingsGroupBox.Size = new System.Drawing.Size(878, 724);
-            this.connectionSettingsGroupBox.TabIndex = 0;
-            this.connectionSettingsGroupBox.TabStop = false;
-            this.connectionSettingsGroupBox.Text = "Connection Settings";
-            // 
-            // ConnectionSettingsTableLayoutPanel
-            // 
-            this.ConnectionSettingsTableLayoutPanel.ColumnCount = 2;
-            this.ConnectionSettingsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.33333F));
-            this.ConnectionSettingsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.66667F));
-            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.PortNameLabel, 0, 0);
-            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.BaudRateLabel, 0, 1);
-            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.SerialPortsListBox, 1, 0);
-            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.BaudListBox, 1, 1);
-            this.ConnectionSettingsTableLayoutPanel.Controls.Add(this.ReScanButton, 0, 2);
-            this.ConnectionSettingsTableLayoutPanel.Location = new System.Drawing.Point(3, 22);
-            this.ConnectionSettingsTableLayoutPanel.Name = "ConnectionSettingsTableLayoutPanel";
-            this.ConnectionSettingsTableLayoutPanel.RowCount = 3;
-            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ConnectionSettingsTableLayoutPanel.Size = new System.Drawing.Size(408, 117);
-            this.ConnectionSettingsTableLayoutPanel.TabIndex = 0;
-            // 
-            // PortNameLabel
-            // 
-            this.PortNameLabel.AutoSize = true;
-            this.PortNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PortNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.PortNameLabel.Location = new System.Drawing.Point(3, 0);
-            this.PortNameLabel.Name = "PortNameLabel";
-            this.PortNameLabel.Size = new System.Drawing.Size(154, 40);
-            this.PortNameLabel.TabIndex = 0;
-            this.PortNameLabel.Text = "Serial Port:";
-            this.PortNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // BaudRateLabel
-            // 
-            this.BaudRateLabel.AutoSize = true;
-            this.BaudRateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BaudRateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.BaudRateLabel.Location = new System.Drawing.Point(3, 40);
-            this.BaudRateLabel.Name = "BaudRateLabel";
-            this.BaudRateLabel.Size = new System.Drawing.Size(154, 40);
-            this.BaudRateLabel.TabIndex = 1;
-            this.BaudRateLabel.Text = "Baud Rate:";
-            this.BaudRateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // SerialPortsListBox
-            // 
-            this.SerialPortsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SerialPortsListBox.FormattingEnabled = true;
-            this.SerialPortsListBox.Location = new System.Drawing.Point(163, 3);
-            this.SerialPortsListBox.Name = "SerialPortsListBox";
-            this.SerialPortsListBox.Size = new System.Drawing.Size(242, 34);
-            this.SerialPortsListBox.TabIndex = 2;
-            // 
-            // BaudListBox
-            // 
-            this.BaudListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BaudListBox.FormattingEnabled = true;
-            this.BaudListBox.Location = new System.Drawing.Point(163, 43);
-            this.BaudListBox.Name = "BaudListBox";
-            this.BaudListBox.Size = new System.Drawing.Size(242, 34);
-            this.BaudListBox.TabIndex = 3;
-            // 
-            // ReScanButton
-            // 
-            this.ReScanButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReScanButton.Location = new System.Drawing.Point(3, 83);
-            this.ReScanButton.Name = "ReScanButton";
-            this.ReScanButton.Size = new System.Drawing.Size(154, 31);
-            this.ReScanButton.TabIndex = 4;
-            this.ReScanButton.Text = "Re-Scan Ports";
-            this.ReScanButton.UseVisualStyleBackColor = true;
-            this.ReScanButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // ProgramMainWindow
             // 
@@ -517,8 +545,10 @@
         private System.Windows.Forms.Label PortNameLabel;
         private System.Windows.Forms.Label BaudRateLabel;
         private System.Windows.Forms.ListBox SerialPortsListBox;
-        private System.Windows.Forms.ListBox BaudListBox;
         private System.Windows.Forms.Button ReScanButton;
+        private System.Windows.Forms.ListBox BaudListBox;
+        private System.Windows.Forms.Button ConnectButton;
+        private System.Windows.Forms.Button DisconnectButton;
     }
 }
 
