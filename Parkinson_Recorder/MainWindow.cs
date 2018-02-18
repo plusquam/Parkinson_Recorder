@@ -51,26 +51,19 @@ namespace Parkinson_Recorder
 
         private void ShowFrequencyChartButton_Click(object sender, EventArgs e)
         {
-            if(chartsSplitContainer.Panel2Collapsed == false)
-            {
+            if(!chartsSplitContainer.Panel2Collapsed)
                 chartsSplitContainer.Panel2Collapsed = true;
-            }
+
             else
-            {
                 chartsSplitContainer.Panel2Collapsed = false;
-            }
         }
 
         private void ShowSignalsChartButton_Click(object sender, EventArgs e)
         {
-            if(chartsSplitContainer.Panel1Collapsed == false)
-            {
+            if(!chartsSplitContainer.Panel1Collapsed)
                 chartsSplitContainer.Panel1Collapsed = true;
-            }
             else
-            {
                 chartsSplitContainer.Panel1Collapsed = false;
-            }
         }
 
         private void ChartsRefreshingTimer_Tick(object sender, EventArgs e)
@@ -117,8 +110,6 @@ namespace Parkinson_Recorder
         {
             _serialCtrl.SendString("test");
         }
-
-
     }
 
 

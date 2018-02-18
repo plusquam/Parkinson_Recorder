@@ -6,12 +6,20 @@ using System.Threading.Tasks;
 
 namespace Parkinson_Recorder.Data_Processing
 {
-
     class IMUData
     {
+        private short _numberOfSensors;
+        private enum _DataQueue {Time = -1, AccelX = 0, AccelY = 1, AccelZ = 2, GyroX = 3, GyroY = 4, GyroZ = 5};
+
         int dtm;
         double lastPrice = 0;
         public static System.Windows.Forms.DataVisualization.Charting.Chart Chart_ { get; set; }
+
+        // a constructor to make life a little easier:
+        public IMUData(short sensorCount)
+        {
+            _numberOfSensors = sensorCount;
+        }
 
         public int Dtm
         {
@@ -25,8 +33,6 @@ namespace Parkinson_Recorder.Data_Processing
             set { lastPrice = value; Chart_.DataBind(); }
         }
 
-        // a constructor to make life a little easier:
-        public IMUData(int dt, double lpr)
-        { Dtm = dt; LastPrice = lpr; }
+        
     }
 }

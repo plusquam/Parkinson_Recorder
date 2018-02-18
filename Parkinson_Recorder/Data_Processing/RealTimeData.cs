@@ -19,7 +19,7 @@ namespace Parkinson_Recorder
 
             data[0] = _stopwatch.ElapsedMilliseconds;
             data[1] = _random.Next(-2000, 2000);
-
+ 
             return data;
         }
 

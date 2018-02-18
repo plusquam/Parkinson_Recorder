@@ -11,6 +11,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
     class SerialCtrl
     {
         public List<int> BaudRates = new List<int> { 9600, 19200, 38400, 57600, 115200, 230400, 460800};
+        public delegate void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e);
 
         private string[] _serialNames;
         private SerialPort _serialPort;
@@ -33,7 +34,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
             return _serialNames;
         }
 
-        public bool InitializePort(string portName, int baud)
+        public bool InitializePort(string portName, int baud, DataReceivedHandler dataReceiveHandler)
         {
             _serialPort = new SerialPort();
             _serialPort.PortName = portName;
@@ -60,8 +61,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
                 //throw new System.UnauthorizedAccessException("Odmowa dostępu do portu " + portName, e);
                 return false;
             }
-
-
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceiveHandler);
 
             isConnected = true;
             return true;
@@ -93,10 +93,12 @@ namespace Parkinson_Recorder.Connection_Ctrl
         public void SendString(string msg)
         {
             if(isConnected)
-                _serialPort.Write(msg);
+                _serialPort.Write(msg);           
         }
 
-
-
+        public byte ReadByte()
+        {
+            return (byte)_serialPort.ReadByte();
+        }       
     }
 }
