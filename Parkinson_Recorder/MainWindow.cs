@@ -108,7 +108,7 @@ namespace Parkinson_Recorder
 
         private void newMeasureButton_Click(object sender, EventArgs e)
         {
-            _serialCtrl.SendString("test");
+            _serialCtrl.SendData("test");
         }
     }
 

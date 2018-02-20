@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace Parkinson_Recorder
 {
@@ -40,8 +41,11 @@ namespace Parkinson_Recorder
 
         public void DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            Console.WriteLine("Byte received: " + _serialCtrl.ReadByte());
+            if (sender is SerialPort serialPort)
+            {
+                while(serialPort.BytesToRead > 0)
+                    Console.Write((char)serialPort.ReadByte());
+            }
         }
-
     }
 }

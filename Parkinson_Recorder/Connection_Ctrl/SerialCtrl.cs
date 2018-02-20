@@ -12,6 +12,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
     {
         public List<int> BaudRates = new List<int> { 9600, 19200, 38400, 57600, 115200, 230400, 460800};
         public delegate void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e);
+        private DataReceivedHandler _receiveHandlerDelegate;
 
         private string[] _serialNames;
         private SerialPort _serialPort;
@@ -53,7 +54,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
             {
                 _serialPort.Open();
             }
-            catch (System.UnauthorizedAccessException e)  // CS0168
+            catch (System.UnauthorizedAccessException e)
             {
                 System.Console.WriteLine(e.Message);
                 MessageBox.Show(e.Message, "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -61,7 +62,9 @@ namespace Parkinson_Recorder.Connection_Ctrl
                 //throw new System.UnauthorizedAccessException("Odmowa dostępu do portu " + portName, e);
                 return false;
             }
-            _serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceiveHandler);
+
+            _receiveHandlerDelegate = dataReceiveHandler;
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
 
             isConnected = true;
             return true;
@@ -90,15 +93,47 @@ namespace Parkinson_Recorder.Connection_Ctrl
             return _serialNames;
         }
 
-        public void SendString(string msg)
+        public bool SendData(byte data)
         {
-            if(isConnected)
-                _serialPort.Write(msg);           
+            byte[] dataArray = new byte[] { data };
+            if (isConnected)
+            {
+                _serialPort.Write(dataArray, 0, 1);
+                return true;
+            }
+            return false;
+        }
+
+        public bool SendData(byte[] data, int count)
+        {
+            if (isConnected)
+            {
+                _serialPort.Write(data, 0, count);
+                return true;
+            }
+            return false;
+        }
+
+        public bool SendData(string msg)
+        {
+            if (isConnected)
+            {
+                _serialPort.Write(msg);
+                return true;
+            }
+            return false;
         }
 
         public byte ReadByte()
         {
             return (byte)_serialPort.ReadByte();
-        }       
+        }
+
+        private void _ByteReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
+            _receiveHandlerDelegate(sender, e);
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
+        }
     }
 }
