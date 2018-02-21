@@ -64,6 +64,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
             }
 
             _receiveHandlerDelegate = dataReceiveHandler;
+            _serialPort.ReceivedBytesThreshold = (6*3 + 1)*2;
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
 
             isConnected = true;
@@ -132,6 +133,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
         private void _ByteReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
+            //await Task.Run(() => _receiveHandlerDelegate(sender, e));
             _receiveHandlerDelegate(sender, e);
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
         }

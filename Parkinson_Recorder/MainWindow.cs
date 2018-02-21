@@ -100,15 +100,32 @@ namespace Parkinson_Recorder
 
             // Define some variables
             signalTimeChart.Series[0].Points.AddXY(_newData[0], _newData[1]);
-            ++_chartPointIndex;
+            _chartPointIndex++;
 
-            long microseconds = _stopwatch.ElapsedMilliseconds; // (Stopwatch.Frequency / 1000000L);
+            long microseconds = _stopwatch.ElapsedMilliseconds;
             Console.WriteLine("Operation completed in: " + microseconds + " (ms)");
         }
 
         private void newMeasureButton_Click(object sender, EventArgs e)
         {
             _serialCtrl.SendData("test");
+        }
+
+        private void openMeasureButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveMeasureButton_Click(object sender, EventArgs e)
+        {
+            String[] linesA = System.IO.File.ReadAllLines(_oryginalFile);
+            String[] linesB = System.IO.File.ReadAllLines(_newFile);
+
+            IEnumerable<String> onlyB = linesB.Except(linesA);
+
+            System.IO.File.WriteAllLines(_compareFile, onlyB);
+
+            MessageBox.Show("Comparing Done");
         }
     }
 

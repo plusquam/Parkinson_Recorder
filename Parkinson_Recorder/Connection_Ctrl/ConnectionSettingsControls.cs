@@ -8,6 +8,9 @@ namespace Parkinson_Recorder
     {
         private Connection_Ctrl.SerialCtrl _serialCtrl = new Parkinson_Recorder.Connection_Ctrl.SerialCtrl();
         private Data_Processing.IMUData _IMUData = new Data_Processing.IMUData(3);
+        private string _oryginalFile = @"C:\Users\plusq\Desktop\pomiar2.txt";
+        private string _newFile = @"C:\Users\plusq\Desktop\pomiar3.txt";
+        private string _compareFile = @"C:\Users\plusq\Desktop\compare.txt";
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
@@ -43,8 +46,12 @@ namespace Parkinson_Recorder
         {
             if (sender is SerialPort serialPort)
             {
-                while(serialPort.BytesToRead > 0)
-                    Console.Write((char)serialPort.ReadByte());
+                int count = serialPort.BytesToRead;
+                byte[] buffer = new byte[count];
+                if(serialPort.Read(buffer, 0, count) == count)
+                    System.IO.File.AppendAllText(_newFile, System.Text.Encoding.Default.GetString(buffer));
+                else
+                    Console.WriteLine("error");
             }
         }
     }

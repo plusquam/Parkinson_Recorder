@@ -10,6 +10,8 @@ namespace Parkinson_Recorder.Data_Processing
     {
         private short _numberOfSensors;
         private enum _DataQueue {Time = -1, AccelX = 0, AccelY = 1, AccelZ = 2, GyroX = 3, GyroY = 4, GyroZ = 5};
+        private const double accelMultiplicator = 0.061035156;
+        private const double gyroMultiplicator = 0.061035156;
 
         int dtm;
         double lastPrice = 0;
