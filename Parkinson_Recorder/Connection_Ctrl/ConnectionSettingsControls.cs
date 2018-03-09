@@ -7,8 +7,8 @@ namespace Parkinson_Recorder
     public partial class ProgramMainWindow
     {
         private Connection_Ctrl.SerialCtrl _serialCtrl = new Parkinson_Recorder.Connection_Ctrl.SerialCtrl();
-        private Data_Processing.IMUData _IMUData = new Data_Processing.IMUData(3);
-        private string _oryginalFile = @"C:\Users\plusq\Desktop\pomiar2.txt";
+        private Data_Processing.IMUData _imuData;
+        private string _oryginalFile = @"C:\Users\plusq\Desktop\data.txt";
         private string _newFile = @"C:\Users\plusq\Desktop\pomiar3.txt";
         private string _compareFile = @"C:\Users\plusq\Desktop\compare.txt";
 
@@ -20,7 +20,7 @@ namespace Parkinson_Recorder
             string baud = BaudListBox.SelectedValue.ToString();
             Console.WriteLine("Selected baud: " + baud);
 
-            if (!_serialCtrl.isConnected)
+            if (!_serialCtrl.IsConnected)
                 _serialCtrl.InitializePort(portName, int.Parse(baud), DataReceived);
             else if (portName != _serialCtrl.SerialName || baud != _serialCtrl.BaudRate.ToString())
             {
@@ -48,10 +48,10 @@ namespace Parkinson_Recorder
             {
                 int count = serialPort.BytesToRead;
                 byte[] buffer = new byte[count];
-                if(serialPort.Read(buffer, 0, count) == count)
-                    System.IO.File.AppendAllText(_newFile, System.Text.Encoding.Default.GetString(buffer));
+                if (serialPort.Read(buffer, 0, count) == count)
+                    _imuData.DataReceived(buffer);
                 else
-                    Console.WriteLine("error");
+                    Console.WriteLine("Warning!!! Bytes count doesn't match!");
             }
         }
     }

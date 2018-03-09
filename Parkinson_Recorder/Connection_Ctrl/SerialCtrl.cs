@@ -16,12 +16,13 @@ namespace Parkinson_Recorder.Connection_Ctrl
 
         private string[] _serialNames;
         private SerialPort _serialPort;
-        public bool isConnected = false;
+        private bool _isConnected = false;
         private string _serialName;
         private int _baudRate;
 
         public string SerialName { get => _serialName; set => _serialName = value; }
         public int BaudRate { get => _baudRate; set => _baudRate = value; }
+        public bool IsConnected { get => _isConnected; set => _isConnected = value; }
 
         public SerialCtrl()
         {
@@ -64,20 +65,20 @@ namespace Parkinson_Recorder.Connection_Ctrl
             }
 
             _receiveHandlerDelegate = dataReceiveHandler;
-            _serialPort.ReceivedBytesThreshold = (6*3 + 1)*2;
+            //_serialPort.ReceivedBytesThreshold = 2;
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
 
-            isConnected = true;
+            _isConnected = true;
             return true;
         }
 
         public void Disconnect()
         {
-            if (isConnected)
+            if (_isConnected)
             {
                 _serialPort.Close();
                 _serialPort = null;
-                isConnected = false;
+                _isConnected = false;
             }
         }
 
@@ -97,7 +98,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
         public bool SendData(byte data)
         {
             byte[] dataArray = new byte[] { data };
-            if (isConnected)
+            if (_isConnected)
             {
                 _serialPort.Write(dataArray, 0, 1);
                 return true;
@@ -107,7 +108,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
 
         public bool SendData(byte[] data, int count)
         {
-            if (isConnected)
+            if (_isConnected)
             {
                 _serialPort.Write(data, 0, count);
                 return true;
@@ -117,7 +118,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
 
         public bool SendData(string msg)
         {
-            if (isConnected)
+            if (_isConnected)
             {
                 _serialPort.Write(msg);
                 return true;

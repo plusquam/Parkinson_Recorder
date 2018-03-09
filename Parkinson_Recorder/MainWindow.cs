@@ -12,7 +12,7 @@ namespace Parkinson_Recorder
         private double[] _newData = new double[2];
         private RealTimeData _dataChartsTimerInstance = new RealTimeData();
         private double[,] _fftData = new double[2, 512];
-        private int _numberOfPointsInChart = 1024;
+        private int _numberOfPointsInChart = 256;
         private Stopwatch _stopwatch = new Stopwatch();
 
         public ProgramMainWindow()
@@ -20,6 +20,8 @@ namespace Parkinson_Recorder
             InitializeComponent();
             SerialPortsListBox.DataSource = _serialCtrl.GetSerialPortsNames();
             BaudListBox.DataSource = _serialCtrl.BaudRates;
+
+            _imuData = new Data_Processing.IMUData(_numberOfPointsInChart);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
