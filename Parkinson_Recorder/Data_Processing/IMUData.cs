@@ -11,7 +11,7 @@ namespace Parkinson_Recorder.Data_Processing
 {
     class IMUData
     {
-        private const int _numberOfSensors = 2;
+        private const int _numberOfSensors = 3;
         private int _numberOfChartPoints;
 
         private int   _byteCounter = 0;
@@ -20,8 +20,8 @@ namespace Parkinson_Recorder.Data_Processing
         private enum  _DataQueue {Time, AccelX, AccelY, AccelZ, GyroX, GyroY, GyroZ};
         private _DataQueue _currentMeasure = _DataQueue.Time;
         
-        private const double _accelMultiplicator = 0.06103516;
-        private const double _gyroMultiplicator = 0.007633588;
+        private const float _accelMultiplicator = 0.06103516f;
+        private const float _gyroMultiplicator = 0.007633588f;
 
         private uint _dataByteH = 0;
 
@@ -29,31 +29,26 @@ namespace Parkinson_Recorder.Data_Processing
 
         private LinkedList<short>  _timeSeries =  new LinkedList<short>();
 
-        private LinkedList<double> _accXSeries = new LinkedList<double>();
-        private LinkedList<double> _accYSeries = new LinkedList<double>();
-        private LinkedList<double> _accZSeries = new LinkedList<double>();
+        private LinkedList<float> _accXSeries = new LinkedList<float>();
+        private LinkedList<float> _accYSeries = new LinkedList<float>();
+        private LinkedList<float> _accZSeries = new LinkedList<float>();
 
-        private LinkedList<double> _gyroXSeries = new LinkedList<double>();
-        private LinkedList<double> _gyroYSeries = new LinkedList<double>();
-        private LinkedList<double> _gyroZSeries = new LinkedList<double>();
+        private LinkedList<float> _gyroXSeries = new LinkedList<float>();
+        private LinkedList<float> _gyroYSeries = new LinkedList<float>();
+        private LinkedList<float> _gyroZSeries = new LinkedList<float>();
 
         public LinkedList<short> TimeSeries { get => _timeSeries; set => _timeSeries = value; }
-        public LinkedList<double> AccXSeries { get => _accXSeries; set => _accXSeries = value; }
-        public LinkedList<double> AccYSeries { get => _accYSeries; set => _accYSeries = value; }
-        public LinkedList<double> AccZSeries { get => _accZSeries; set => _accZSeries = value; }
-        public LinkedList<double> GyroXSeries { get => _gyroXSeries; set => _gyroXSeries = value; }
-        public LinkedList<double> GyroYSeries { get => _gyroYSeries; set => _gyroYSeries = value; }
-        public LinkedList<double> GyroZSeries { get => _gyroZSeries; set => _gyroZSeries = value; }
+        public LinkedList<float> AccXSeries { get => _accXSeries; set => _accXSeries = value; }
+        public LinkedList<float> AccYSeries { get => _accYSeries; set => _accYSeries = value; }
+        public LinkedList<float> AccZSeries { get => _accZSeries; set => _accZSeries = value; }
+        public LinkedList<float> GyroXSeries { get => _gyroXSeries; set => _gyroXSeries = value; }
+        public LinkedList<float> GyroYSeries { get => _gyroYSeries; set => _gyroYSeries = value; }
+        public LinkedList<float> GyroZSeries { get => _gyroZSeries; set => _gyroZSeries = value; }
 
 
         public IMUData(int numberOfChartPoints)
         {
             _numberOfChartPoints = numberOfChartPoints;
-
-            short a = 1235;
-            double b = (double)a * 0.0001f;
-
-            Console.WriteLine(b);
         }
 
         public void DataReceived(byte[] data)
@@ -65,7 +60,7 @@ namespace Parkinson_Recorder.Data_Processing
                 {
                     short tempData = (short)((_dataByteH << 4) + getHexFromAsciiChar(currentByte));
                     Console.Write(getHexFromAsciiChar(currentByte) + " -> ");
-                    Console.Write(tempData + Environment.NewLine);
+                    Console.Write(tempData);
 #else
                 if (_byteCounter % 2 == 1)
                 {
@@ -84,6 +79,7 @@ namespace Parkinson_Recorder.Data_Processing
                     }
 
                     //_fileStream.Write(tempData.ToString() + ';');
+                    float dataValue;
 
                     switch (_currentMeasure)
                     {
@@ -91,42 +87,56 @@ namespace Parkinson_Recorder.Data_Processing
                             {
                                 _timeSeries.AddLast(tempData);
                                 _fileStream.Write(tempData.ToString() + ";");
+                                Console.Write( "  " + tempData.ToString() + Environment.NewLine);
+                                Console.WriteLine("New measure.");
                                 break;
                             }
                         case _DataQueue.AccelX:
                             {
-                                _accXSeries.AddLast((double)tempData * _accelMultiplicator);
-                                _fileStream.Write(((double)tempData * _accelMultiplicator).ToString() + ';');
+                                dataValue = (float)tempData * _accelMultiplicator;
+                                _accXSeries.AddLast(dataValue);
+                                _fileStream.Write(dataValue.ToString() + ';');
+                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
                                 break;
                             }
                         case _DataQueue.AccelY:
                             {
-                                _accYSeries.AddLast((double)tempData * _accelMultiplicator);
-                                _fileStream.Write(((double)tempData * _accelMultiplicator).ToString() + ";");
+                                dataValue = (float)tempData * _accelMultiplicator;
+                                _accYSeries.AddLast(dataValue);
+                                _fileStream.Write(dataValue.ToString() + ";");
+                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
                                 break;
                             }
                         case _DataQueue.AccelZ:
                             {
-                                _accZSeries.AddLast((double)tempData * _accelMultiplicator);
-                                _fileStream.Write(((double)tempData * _accelMultiplicator).ToString() + ";");
+                                dataValue = (float)tempData * _accelMultiplicator;
+                                _accZSeries.AddLast(dataValue);
+                                _fileStream.Write(dataValue.ToString() + ";");
+                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
                                 break;
                             }
                         case _DataQueue.GyroX:
                             {
-                                _gyroXSeries.AddLast((double)tempData * _gyroMultiplicator);
-                                _fileStream.Write(((double)tempData * _gyroMultiplicator).ToString() + ";");
+                                dataValue = (float)tempData * _gyroMultiplicator;
+                                _gyroXSeries.AddLast(dataValue);
+                                _fileStream.Write(dataValue.ToString() + ";");
+                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
                                 break;
                             }
                         case _DataQueue.GyroY:
                             {
-                                _gyroYSeries.AddLast((double)tempData * _gyroMultiplicator);
-                                _fileStream.Write(((double)tempData * _gyroMultiplicator).ToString() + ";");
+                                dataValue = (float)tempData * _gyroMultiplicator;
+                                _gyroYSeries.AddLast(dataValue);
+                                _fileStream.Write(dataValue.ToString() + ";");
+                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
                                 break;
                             }   
                         case _DataQueue.GyroZ:
                             {
-                                _gyroZSeries.AddLast((double)tempData * _gyroMultiplicator);
-                                _fileStream.Write(((double)tempData * _gyroMultiplicator).ToString() + ";");
+                                dataValue = (float)tempData * _gyroMultiplicator;
+                                _gyroZSeries.AddLast(dataValue);
+                                _fileStream.Write(dataValue.ToString() + ";");
+                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
                                 break;
                             }
                         default:
@@ -134,19 +144,18 @@ namespace Parkinson_Recorder.Data_Processing
                             break;
                     }
                     
-
                     _currentMeasure++;
 
                     if (_currentMeasure > _DataQueue.GyroZ)
                     {
                         _currentSensor++;
+                        Console.WriteLine("Next sensor");
                         if (_currentSensor >= _numberOfSensors)
                         {
                             _currentSensor = 0;
                             _currentMeasure = _DataQueue.Time;
                             _dataByteH = 0;
                             _fileStream.Write(Environment.NewLine);
-                            Console.WriteLine("Next sensor");
                         }
                         else
                             _currentMeasure = _DataQueue.AccelX;
