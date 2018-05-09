@@ -1,4 +1,5 @@
 ﻿#define TEST_FILE
+//#define SHOW_DATA_ON_CONSOLE
 
 using System;
 using System.Collections.Generic;
@@ -6,18 +7,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FFTLibrary;
 
 namespace Parkinson_Recorder.Data_Processing
 {
     class IMUData
     {
+        public enum SensorType { Accelerometer, Gyroscope };
+        private enum _DataQueue { Time, AccelX, AccelY, AccelZ, GyroX, GyroY, GyroZ };
+
         private const int _numberOfSensors = 3;
         private int _numberOfChartPoints;
+        private SensorType _currentSensorType = SensorType.Accelerometer;
 
-        private int   _byteCounter = 0;
+        private int _byteCounter = 0;
         private int _currentSensor = 0;
+        private int _plotingSensorNumber = 0;
 
-        private enum  _DataQueue {Time, AccelX, AccelY, AccelZ, GyroX, GyroY, GyroZ};
+        private int _fftDataCounter = 0;
+        private int _numberOfFFTPoints;
+
+        private int _dataTresholdCouter = 0;
+        private int _receivedMeasuresTreshold = 20;
+
         private _DataQueue _currentMeasure = _DataQueue.Time;
         
         private const float _accelMultiplicator = 0.06103516f;
@@ -29,56 +41,74 @@ namespace Parkinson_Recorder.Data_Processing
 
         private LinkedList<short>  _timeSeries =  new LinkedList<short>();
 
-        private LinkedList<float> _accXSeries = new LinkedList<float>();
-        private LinkedList<float> _accYSeries = new LinkedList<float>();
-        private LinkedList<float> _accZSeries = new LinkedList<float>();
-
-        private LinkedList<float> _gyroXSeries = new LinkedList<float>();
-        private LinkedList<float> _gyroYSeries = new LinkedList<float>();
-        private LinkedList<float> _gyroZSeries = new LinkedList<float>();
+        private LinkedList<float> _xSeries = new LinkedList<float>();
+        private LinkedList<float> _ySeries = new LinkedList<float>();
+        private LinkedList<float> _zSeries = new LinkedList<float>();
 
         public LinkedList<short> TimeSeries { get => _timeSeries; set => _timeSeries = value; }
-        public LinkedList<float> AccXSeries { get => _accXSeries; set => _accXSeries = value; }
-        public LinkedList<float> AccYSeries { get => _accYSeries; set => _accYSeries = value; }
-        public LinkedList<float> AccZSeries { get => _accZSeries; set => _accZSeries = value; }
-        public LinkedList<float> GyroXSeries { get => _gyroXSeries; set => _gyroXSeries = value; }
-        public LinkedList<float> GyroYSeries { get => _gyroYSeries; set => _gyroYSeries = value; }
-        public LinkedList<float> GyroZSeries { get => _gyroZSeries; set => _gyroZSeries = value; }
+        public LinkedList<float> XSeries { get => _xSeries; set => _xSeries = value; }
+        public LinkedList<float> YSeries { get => _ySeries; set => _ySeries = value; }
+        public LinkedList<float> ZSeries { get => _zSeries; set => _zSeries = value; }
 
+        private double[] _xAxisDataArray;
+        private double[] _yAxisDataArray;
+        private double[] _zAxisDataArray;
+        private double[] _xAxisFFTDataArray;
+        private double[] _yAxisFFTDataArray;
+        private double[] _zAxisFFTDataArray;
 
-        public IMUData(int numberOfChartPoints)
+        public delegate void ChartRefreshEventHandler(object sender);
+        public event ChartRefreshEventHandler ChartRefreshEvent;
+
+        public delegate void DataNumberReachEventHandler(object sender);
+        public event DataNumberReachEventHandler DataNumberReachEvent;
+        private System.ComponentModel.BackgroundWorker fftBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+
+        public int ReceivedMeasuresTreshold { get => _receivedMeasuresTreshold; set => _receivedMeasuresTreshold = value; }
+        public double[] XAxisFFTDataArray { get => _xAxisFFTDataArray; set => _xAxisFFTDataArray = value; }
+        public double[] YAxisFFTDataArray { get => _yAxisFFTDataArray; set => _yAxisFFTDataArray = value; }
+        public double[] ZAxisFFTDataArray { get => _zAxisFFTDataArray; set => _zAxisFFTDataArray = value; }
+
+        public IMUData(int numberOfChartPoints, int numberOfFFTPoints)
         {
             _numberOfChartPoints = numberOfChartPoints;
+            _numberOfFFTPoints = numberOfFFTPoints;
+
+            _xAxisDataArray = new double[_numberOfFFTPoints];
+            _yAxisDataArray = new double[_numberOfFFTPoints];
+            _zAxisDataArray = new double[_numberOfFFTPoints];
+            _xAxisFFTDataArray = new double[_numberOfFFTPoints];
+            _yAxisFFTDataArray = new double[_numberOfFFTPoints];
+            _zAxisFFTDataArray = new double[_numberOfFFTPoints];
+
+            fftBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(computeFFTandSendData);
         }
 
-        public void DataReceived(byte[] data)
+        public void PushData(byte[] data)
         {
             foreach ( byte currentByte in data)
             {
 #if TEST_FILE
                 if (_byteCounter % 4 == 3)
                 {
-                    short tempData = (short)((_dataByteH << 4) + getHexFromAsciiChar(currentByte));
-                    Console.Write(getHexFromAsciiChar(currentByte) + " -> ");
-                    Console.Write(tempData);
+                    short tempData = (short)((_dataByteH << 4) + _GetHexFromAsciiChar(currentByte));
+                    #if SHOW_DATA_ON_CONSOLE
+                        Console.Write(_GetHexFromAsciiChar(currentByte) + " -> ");
+                        Console.Write(tempData);
+                    #endif
 #else
-                if (_byteCounter % 2 == 1)
+                    if (_byteCounter % 2 == 1)
                 {
                     short tempData = (short)((_dataByteH << 8 ) + currentByte );
 #endif
-
-                    while (_timeSeries.Count >= _numberOfChartPoints && _gyroZSeries.Count >= _numberOfChartPoints && _timeSeries.Count != 0)
+                    while (_timeSeries.Count > _numberOfChartPoints && _zSeries.Count > _numberOfChartPoints && _timeSeries.Count != 0)
                     {
                         _timeSeries.RemoveFirst();
-                        _accXSeries.RemoveFirst();
-                        _accYSeries.RemoveFirst();
-                        _accZSeries.RemoveFirst();
-                        _gyroXSeries.RemoveFirst();
-                        _gyroYSeries.RemoveFirst();
-                        _gyroZSeries.RemoveFirst();
+                        _xSeries.RemoveFirst();
+                        _ySeries.RemoveFirst();
+                        _zSeries.RemoveFirst();
                     }
 
-                    //_fileStream.Write(tempData.ToString() + ';');
                     float dataValue;
 
                     switch (_currentMeasure)
@@ -87,56 +117,94 @@ namespace Parkinson_Recorder.Data_Processing
                             {
                                 _timeSeries.AddLast(tempData);
                                 _fileStream.Write(tempData.ToString() + ";");
-                                Console.Write( "  " + tempData.ToString() + Environment.NewLine);
-                                Console.WriteLine("New measure.");
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write( "  " + tempData.ToString() + Environment.NewLine);
+                                    Console.WriteLine("New measure.");
+                                #endif
                                 break;
                             }
                         case _DataQueue.AccelX:
                             {
                                 dataValue = (float)tempData * _accelMultiplicator;
-                                _accXSeries.AddLast(dataValue);
+                                if (_plotingSensorNumber == _currentSensor && _currentSensorType == SensorType.Accelerometer)
+                                {
+                                    _xSeries.AddLast(dataValue);
+                                    _xAxisDataArray[_fftDataCounter] = (double)dataValue;
+                                }
                                 _fileStream.Write(dataValue.ToString() + ';');
-                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #endif
                                 break;
                             }
                         case _DataQueue.AccelY:
                             {
                                 dataValue = (float)tempData * _accelMultiplicator;
-                                _accYSeries.AddLast(dataValue);
+                                if (_plotingSensorNumber == _currentSensor && _currentSensorType == SensorType.Accelerometer)
+                                {
+                                    _ySeries.AddLast(dataValue);
+                                    _yAxisDataArray[_fftDataCounter] = (double)dataValue;
+                                }
                                 _fileStream.Write(dataValue.ToString() + ";");
-                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #endif
                                 break;
                             }
                         case _DataQueue.AccelZ:
                             {
                                 dataValue = (float)tempData * _accelMultiplicator;
-                                _accZSeries.AddLast(dataValue);
+                                if (_plotingSensorNumber == _currentSensor && _currentSensorType == SensorType.Accelerometer)
+                                {
+                                    _zSeries.AddLast(dataValue);
+                                    _zAxisDataArray[_fftDataCounter] = (double)dataValue;
+                                }
                                 _fileStream.Write(dataValue.ToString() + ";");
-                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #endif
                                 break;
                             }
                         case _DataQueue.GyroX:
                             {
                                 dataValue = (float)tempData * _gyroMultiplicator;
-                                _gyroXSeries.AddLast(dataValue);
+                                if (_plotingSensorNumber == _currentSensor && _currentSensorType == SensorType.Gyroscope)
+                                {
+                                    _xSeries.AddLast(dataValue);
+                                    _xAxisDataArray[_fftDataCounter] = (double)dataValue;
+                                }
                                 _fileStream.Write(dataValue.ToString() + ";");
-                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #endif
                                 break;
                             }
                         case _DataQueue.GyroY:
                             {
                                 dataValue = (float)tempData * _gyroMultiplicator;
-                                _gyroYSeries.AddLast(dataValue);
-                                _fileStream.Write(dataValue.ToString() + ";");
-                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                if (_plotingSensorNumber == _currentSensor && _currentSensorType == SensorType.Gyroscope)
+                                {
+                                    _ySeries.AddLast(dataValue);
+                                    _yAxisDataArray[_fftDataCounter] = (double)dataValue;
+                                }
+                                    _fileStream.Write(dataValue.ToString() + ";");
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #endif
                                 break;
                             }   
                         case _DataQueue.GyroZ:
                             {
                                 dataValue = (float)tempData * _gyroMultiplicator;
-                                _gyroZSeries.AddLast(dataValue);
-                                _fileStream.Write(dataValue.ToString() + ";");
-                                Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                if (_plotingSensorNumber == _currentSensor && _currentSensorType == SensorType.Gyroscope)
+                                {
+                                    _zSeries.AddLast(dataValue);
+                                    _zAxisDataArray[_fftDataCounter] = (double)dataValue;
+                                }
+                                    _fileStream.Write(dataValue.ToString() + ";");
+                                #if SHOW_DATA_ON_CONSOLE
+                                    Console.Write("  " + dataValue.ToString() + Environment.NewLine);
+                                #endif
                                 break;
                             }
                         default:
@@ -149,12 +217,35 @@ namespace Parkinson_Recorder.Data_Processing
                     if (_currentMeasure > _DataQueue.GyroZ)
                     {
                         _currentSensor++;
-                        Console.WriteLine("Next sensor");
+                        #if SHOW_DATA_ON_CONSOLE
+                            Console.WriteLine("Next sensor");
+                        #endif
                         if (_currentSensor >= _numberOfSensors)
                         {
                             _currentSensor = 0;
                             _currentMeasure = _DataQueue.Time;
                             _dataByteH = 0;
+
+                            _dataTresholdCouter++;
+                            if(_dataTresholdCouter >= _receivedMeasuresTreshold)
+                            {
+                                _dataTresholdCouter = 0;
+                                ChartRefreshEvent(this);
+                            }
+
+                            _fftDataCounter++;
+                            if(_fftDataCounter >= _numberOfFFTPoints)
+                            {
+                                _fftDataCounter = 0;
+
+                                while(fftBackgroundWorker.IsBusy)
+                                { }
+                                _xAxisFFTDataArray = _xAxisDataArray.Clone() as double[];
+                                _yAxisFFTDataArray = _yAxisDataArray.Clone() as double[];
+                                _zAxisFFTDataArray = _zAxisDataArray.Clone() as double[];
+                                fftBackgroundWorker.RunWorkerAsync();
+                            }
+
                             _fileStream.Write(Environment.NewLine);
                         }
                         else
@@ -164,8 +255,10 @@ namespace Parkinson_Recorder.Data_Processing
                 else
                 {
 #if TEST_FILE
-                    _dataByteH = (_dataByteH << 4) + (uint)getHexFromAsciiChar(currentByte);
-                    Console.Write(getHexFromAsciiChar(currentByte).ToString() + "|");
+                    _dataByteH = (_dataByteH << 4) + (uint)_GetHexFromAsciiChar(currentByte);
+                    #if SHOW_DATA_ON_CONSOLE
+                        Console.Write(_GetHexFromAsciiChar(currentByte).ToString() + "|");
+                    #endif
 #else
                     _dataByteH = currentByte;
 #endif
@@ -175,8 +268,23 @@ namespace Parkinson_Recorder.Data_Processing
             }
         }
 
+        private void computeFFTandSendData(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            double[] imagValues = new double[_numberOfFFTPoints];
+            Array.Clear(imagValues, 0, _numberOfFFTPoints);
+            int m = (int)Math.Log(_numberOfFFTPoints, 2);
+
+            FFTLibrary.Complex.FFT(1, m, _xAxisFFTDataArray, imagValues);
+            Array.Clear(imagValues, 0, _numberOfFFTPoints);
+            FFTLibrary.Complex.FFT(1, m, _yAxisFFTDataArray, imagValues);
+            Array.Clear(imagValues, 0, _numberOfFFTPoints);
+            FFTLibrary.Complex.FFT(1, m, _zAxisFFTDataArray, imagValues);
+
+            DataNumberReachEvent(this);
+        }
+
 #if TEST_FILE
-        private byte getHexFromAsciiChar(byte inChar)
+        private byte _GetHexFromAsciiChar(byte inChar)
         {
             byte hexValue = 0;
 

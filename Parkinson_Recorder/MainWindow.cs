@@ -8,12 +8,10 @@ namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private int _chartPointIndex = 0;
         private double[] _newData = new double[2];
         private RealTimeData _dataChartsTimerInstance = new RealTimeData();
-        private double[,] _fftData = new double[2, 512];
-        private int _numberOfPointsInChart = 256;
-        private Stopwatch _stopwatch = new Stopwatch();
+        private int _numberOfPointsInChart = 1024;
+        private int _numberOfFFTPoints = 64;
 
         public ProgramMainWindow()
         {
@@ -21,7 +19,25 @@ namespace Parkinson_Recorder
             SerialPortsListBox.DataSource = _serialCtrl.GetSerialPortsNames();
             BaudListBox.DataSource = _serialCtrl.BaudRates;
 
-            _imuData = new Data_Processing.IMUData(_numberOfPointsInChart);
+            _imuData = new Data_Processing.IMUData(_numberOfPointsInChart, _numberOfFFTPoints);
+            _imuData.ChartRefreshEvent += new Data_Processing.IMUData.ChartRefreshEventHandler(_RefreshTimeChart_Invoker);
+            _imuData.DataNumberReachEvent += new Data_Processing.IMUData.DataNumberReachEventHandler(_RefreshFreqChart_Invoker);
+            _InitializeTimeChart();
+            _InitializeFreqChart();
+        }
+
+        private void _InitializeTimeChart()
+        {
+            signalTimeChart.Enabled = true;
+            signalTimeChart.ResetAutoValues();
+            //signalTimeChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.;
+        }
+
+        private void _InitializeFreqChart()
+        {
+            signalFrequencyChart.Enabled = true;
+            signalFrequencyChart.ResetAutoValues();
+            //signalTimeChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.;
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -31,12 +47,10 @@ namespace Parkinson_Recorder
 
         private void StartStopMeasureButton_Click(object sender, EventArgs e)
         {
-            if (this.signalTimeChart.Enabled)
+            /*if (this.signalTimeChart.Enabled)
             {
                 this.signalTimeChart.Enabled = false;
                 this.signalFrequencyChart.Enabled = false;
-                dataChartsTimer.Enabled = false;
-                chartsRefreshingTimer.Enabled = false;
             }
             else
             {
@@ -44,11 +58,7 @@ namespace Parkinson_Recorder
                 this._dataChartsTimerInstance.ResetStartTime();
                 this.signalTimeChart.Series[0].Points.Clear();
                 this.signalFrequencyChart.Enabled = true;
-                dataChartsTimer.Enabled = true;
-                chartsRefreshingTimer.Enabled = true;
-                dataChartsTimer.Start();
-                chartsRefreshingTimer.Start();
-            }
+            }*/
         }
 
         private void ShowFrequencyChartButton_Click(object sender, EventArgs e)
@@ -68,44 +78,36 @@ namespace Parkinson_Recorder
                 chartsSplitContainer.Panel1Collapsed = false;
         }
 
-        private void ChartsRefreshingTimer_Tick(object sender, EventArgs e)
+        private void _RefreshTimeChart_Invoker(object sender)
         {
-            _stopwatch.Restart();
-
-            // Adjust Y & X axis scale
-            //signalTimeChart.ResetAutoValues();
-            int counterTemp = 0;
-
-            // Keep a constant number of points by removing them from the left
-            while (signalTimeChart.Series[0].Points.Count > _numberOfPointsInChart)
-            {
-                // Remove data points on the left side
-                counterTemp++;
-                signalTimeChart.Series[0].Points.RemoveAt(0);
-            }
-
-            // Adjust X axis scale
-            signalTimeChart.ChartAreas[0].AxisX.Minimum = signalTimeChart.Series[0].Points.First().XValue;
-            signalTimeChart.ChartAreas[0].AxisX.Maximum = signalTimeChart.Series[0].Points.Last().XValue;
-
-            // Redraw chart
-            signalTimeChart.Invalidate();
-
-            long microseconds = _stopwatch.ElapsedTicks / (Stopwatch.Frequency / 1000000L);
-            //Console.WriteLine("Operation completed in: " + microseconds + " (us)");
-            //Console.WriteLine("count: " + counterTemp);
+            if (signalTimeChart.InvokeRequired)
+                Invoke(new MethodInvoker(_RefreshTimeChart));
+            else
+                _RefreshTimeChart();
         }
-      
-        private void DataChartsTimer_Tick(object sender, EventArgs e)
+
+        private void _RefreshTimeChart()
         {
-            _newData = _dataChartsTimerInstance.GenerateData();
+            signalTimeChart.Series["XAxis"].Points.DataBindXY(_imuData.TimeSeries, _imuData.XSeries);
+            signalTimeChart.Series["YAxis"].Points.DataBindXY(_imuData.TimeSeries, _imuData.YSeries);
+            signalTimeChart.Series["ZAxis"].Points.DataBindXY(_imuData.TimeSeries, _imuData.ZSeries);
+            signalTimeChart.Invalidate();
+        }
 
-            // Define some variables
-            signalTimeChart.Series[0].Points.AddXY(_newData[0], _newData[1]);
-            _chartPointIndex++;
+        private void _RefreshFreqChart_Invoker(object sender)
+        {
+            if (signalFrequencyChart.InvokeRequired)
+                Invoke(new MethodInvoker(_RefreshFreqChart));
+            else
+                _RefreshFreqChart();
+        }
 
-            long microseconds = _stopwatch.ElapsedMilliseconds;
-            Console.WriteLine("Operation completed in: " + microseconds + " (ms)");
+        private void _RefreshFreqChart()
+        {
+            signalFrequencyChart.Series["XAxis"].Points.DataBindY(_imuData.XAxisFFTDataArray);
+            signalFrequencyChart.Series["YAxis"].Points.DataBindY(_imuData.YAxisFFTDataArray);
+            signalFrequencyChart.Series["ZAxis"].Points.DataBindY(_imuData.ZAxisFFTDataArray);
+            signalFrequencyChart.Invalidate();
         }
 
         private void newMeasureButton_Click(object sender, EventArgs e)

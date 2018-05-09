@@ -49,7 +49,7 @@ namespace Parkinson_Recorder
                 int count = serialPort.BytesToRead;
                 byte[] buffer = new byte[count];
                 if (serialPort.Read(buffer, 0, count) == count)
-                    _imuData.DataReceived(buffer);
+                    _imuData.PushData(buffer);
                 else
                     Console.WriteLine("Warning!!! Bytes count doesn't match!");
             }

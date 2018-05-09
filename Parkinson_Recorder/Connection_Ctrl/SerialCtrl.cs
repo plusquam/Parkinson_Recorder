@@ -131,7 +131,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
             return (byte)_serialPort.ReadByte();
         }
 
-        private void _ByteReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        private void _ByteReceived(object sender, SerialDataReceivedEventArgs e)
         {
             _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
             //await Task.Run(() => _receiveHandlerDelegate(sender, e));
