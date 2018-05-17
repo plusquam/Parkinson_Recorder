@@ -51,7 +51,9 @@
     </Compile>
     <Compile Include="Connection_Ctrl\SerialCtrl.cs" />
     <Compile Include="Data_Processing\Complex.cs" />
-    <Compile Include="Data_Processing\IMUData.cs" />
+    <Compile Include="Data_Processing\CsvParser.cs" />
+    <Compile Include="Data_Processing\ImuData.cs" />
+    <Compile Include="Data_Processing\ImuDataProcessing.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,7 +62,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data_Processing\RealTimeData.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

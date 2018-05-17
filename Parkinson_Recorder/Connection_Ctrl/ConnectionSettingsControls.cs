@@ -7,7 +7,7 @@ namespace Parkinson_Recorder
     public partial class ProgramMainWindow
     {
         private Connection_Ctrl.SerialCtrl _serialCtrl = new Parkinson_Recorder.Connection_Ctrl.SerialCtrl();
-        private Data_Processing.IMUData _imuData;
+        private Data_Processing.ImuDataProcessing _imuData;
         private string _oryginalFile = @"C:\Users\plusq\Desktop\data.txt";
         private string _newFile = @"C:\Users\plusq\Desktop\pomiar3.txt";
         private string _compareFile = @"C:\Users\plusq\Desktop\compare.txt";
@@ -15,10 +15,7 @@ namespace Parkinson_Recorder
         private void ConnectButton_Click(object sender, EventArgs e)
         {
             string portName = SerialPortsListBox.SelectedValue.ToString();
-            Console.WriteLine("Selected port name: " + portName);
-
             string baud = BaudListBox.SelectedValue.ToString();
-            Console.WriteLine("Selected baud: " + baud);
 
             if (!_serialCtrl.IsConnected)
                 _serialCtrl.InitializePort(portName, int.Parse(baud), DataReceived);

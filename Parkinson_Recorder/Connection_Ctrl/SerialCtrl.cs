@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Parkinson_Recorder.Connection_Ctrl
 {
-    class SerialCtrl
+    class SerialCtrl //: IDisposable
     {
         public List<int> BaudRates = new List<int> { 9600, 19200, 38400, 57600, 115200, 230400, 460800};
         public delegate void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e);
@@ -69,6 +69,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
 
             _isConnected = true;
+            Console.WriteLine("Serial port " + portName + " opened with baud: " + baud);
             return true;
         }
 
@@ -79,6 +80,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
                 _serialPort.Close();
                 _serialPort = null;
                 _isConnected = false;
+                Console.WriteLine("Serial port " + _serialName + " disconnected.");
             }
         }
 
