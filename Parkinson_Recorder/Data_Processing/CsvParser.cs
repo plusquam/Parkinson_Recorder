@@ -117,8 +117,6 @@ namespace Parkinson_Recorder.Data_Processing
             {
                 WriteData<T>(imuData);
             }
-            
-            _fileStream.Flush();
         }
 
         public string FileName { get => _fileName; set => _fileName = value; }

@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A5E0B7BA-74E2-4A5D-B63A-B2C685D9859F}</ProjectGuid>
+    <ProjectGuid>{55A0A5ED-1CB2-436B-ADD5-949BA0C00F95}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Parkinson_Recorder</RootNamespace>
-    <AssemblyName>Parkinson_Recorder</AssemblyName>
+    <RootNamespace>Serial_Data_Tool</RootNamespace>
+    <AssemblyName>Serial_Data_Tool</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,15 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connection_Ctrl\ConnectionSettingsControls.cs">
-      <SubType>Form</SubType>
+    <Compile Include="..\Parkinson_Recorder\Connection_Ctrl\SerialCtrl.cs">
+      <Link>Connection_Control\SerialCtrl.cs</Link>
     </Compile>
-    <Compile Include="Connection_Ctrl\SerialCtrl.cs" />
-    <Compile Include="Data_Processing\Complex.cs" />
-    <Compile Include="Data_Processing\CsvParser.cs" />
-    <Compile Include="Data_Processing\ImuData.cs" />
-    <Compile Include="Data_Processing\ImuDataProcessing.cs" />
-    <Compile Include="Data_Processing\PatientData.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,9 +82,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Icons\services-portfolio.png" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

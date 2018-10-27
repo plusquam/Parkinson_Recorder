@@ -9,11 +9,11 @@ namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private double[] _newData = new double[2];
         private int _numberOfPointsInChart = 512;
-        private int _numberOfFFTPoints = 64;
+        private int _numberOfFFTPoints = 128;
 
         private CsvParser _csvParser = new CsvParser(@"C:\Users\plusq\Desktop\TempFile.csv", 3);
+        private Data_Processing.PatientData _patientData;
 
         public ProgramMainWindow()
         {
@@ -22,8 +22,8 @@ namespace Parkinson_Recorder
             BaudListBox.DataSource = _serialCtrl.BaudRates;
 
             _imuData = new Data_Processing.ImuDataProcessing(_numberOfPointsInChart, _numberOfFFTPoints);
-            _imuData.TimeChartRefreshEvent += new Data_Processing.ImuDataProcessing.ChartRefreshEventHandler(_RefreshTimeChart_Invoker);
-            _imuData.FftChartRefreshEvent += new Data_Processing.ImuDataProcessing.ChartRefreshEventHandler(_RefreshFreqChart_Invoker);
+            _imuData.TimeChartRefreshEvent += _RefreshTimeChart_Invoker;
+            _imuData.FftChartRefreshEvent += _RefreshFreqChart_Invoker;
             _imuData.SaveDataEvent += SaveDataToCsv;
             _InitializeTimeChart();
             _InitializeFreqChart();
@@ -43,6 +43,24 @@ namespace Parkinson_Recorder
             signalFrequencyChart.Enabled = true;
             //signalFrequencyChart.ResetAutoValues();
             //signalTimeChart.Series[0].Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.;
+        }
+
+        private void _ClearTimeChart()
+        {
+            foreach (var series in signalTimeChart.Series)
+            {
+                series.Points.Clear();
+            }
+            signalTimeChart.Invalidate();
+        }
+
+        private void _ClearFreqChart()
+        {
+            foreach (var series in signalFrequencyChart.Series)
+            {
+                series.Points.Clear();
+            }
+            signalFrequencyChart.Invalidate();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,7 +164,20 @@ namespace Parkinson_Recorder
 
             MessageBox.Show("Comparing Done");
         }
+
+        private void patientDataTable_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
-
-
 }

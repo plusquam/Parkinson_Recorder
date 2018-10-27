@@ -36,6 +36,9 @@ namespace Parkinson_Recorder
         private void DisconnectButton_Click(object sender, EventArgs e)
         {
             _serialCtrl.Disconnect();
+            _imuData.Clear();
+            _ClearFreqChart();
+            _ClearTimeChart();
             DisconnectButton.Enabled = false;
         }
 
@@ -44,11 +47,15 @@ namespace Parkinson_Recorder
             if (sender is SerialPort serialPort)
             {
                 int count = serialPort.BytesToRead;
-                byte[] buffer = new byte[count];
-                if (serialPort.Read(buffer, 0, count) == count)
-                    _imuData.PushData(buffer);
-                else
-                    Console.WriteLine("Warning!!! Bytes count doesn't match!");
+                if (count > 0)
+                {
+                    byte[] buffer = new byte[count];
+                    if (serialPort.Read(buffer, 0, count) == count)
+                        _imuData.PushData(buffer);
+                    else
+                        Console.WriteLine("Warning!!! Bytes count doesn't match!");
+                }
+                else Console.WriteLine("No data to read!");
             }
         }
     }

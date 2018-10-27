@@ -40,11 +40,11 @@ namespace Parkinson_Recorder.Data_Processing
 
         private uint _dataByteH = 0;
 
-        private LinkedList<String>  _timeSeries =  new LinkedList<String>();
+        private LinkedList<String>  _timeSeries;
 
-        private LinkedList<float> _xSeries = new LinkedList<float>();
-        private LinkedList<float> _ySeries = new LinkedList<float>();
-        private LinkedList<float> _zSeries = new LinkedList<float>();
+        private LinkedList<float> _xSeries;
+        private LinkedList<float> _ySeries;
+        private LinkedList<float> _zSeries;
 
         public LinkedList<String> TimeSeries { get => _timeSeries; set => _timeSeries = value; }
         public LinkedList<float> XSeries { get => _xSeries; set => _xSeries = value; }
@@ -59,7 +59,7 @@ namespace Parkinson_Recorder.Data_Processing
         private float[]    _zAxisFFTDataArray;
         private int[]       _freqFTTArray;
 
-        private List<ImuData<float>> _tempDataToSaveList = new List<ImuData<float>>();
+        private List<ImuData<float>> _tempDataToSaveList;
         private ImuData<float> _tempDataToSave;
 
         public delegate void ChartRefreshEventHandler(object sender);
@@ -84,6 +84,20 @@ namespace Parkinson_Recorder.Data_Processing
             _numberOfChartPoints = numberOfChartPoints;
             _numberOfFFTPoints = numberOfFFTPoints;
 
+            _InitializeComponents();
+
+            _fftBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(_ComputeFFTandSendData);
+            _dataSaveBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(DataSaveEventCall);
+        }
+
+        private void _InitializeComponents()
+        {
+            _timeSeries = new LinkedList<String>();
+
+            _xSeries = new LinkedList<float>();
+            _ySeries = new LinkedList<float>();
+            _zSeries = new LinkedList<float>();
+
             _xAxisDataArray = new float[_numberOfFFTPoints];
             _yAxisDataArray = new float[_numberOfFFTPoints];
             _zAxisDataArray = new float[_numberOfFFTPoints];
@@ -92,9 +106,7 @@ namespace Parkinson_Recorder.Data_Processing
             _zAxisFFTDataArray = new float[_numberOfFFTPoints];
 
             _tempDataToSave = new ImuData<float>(_numberOfSensors);
-
-            _fftBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(ComputeFFTandSendData);
-            _dataSaveBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(CallDataSaveEvent);
+            _tempDataToSaveList = new List<ImuData<float>>();
         }
 
         public void PushData(byte[] data)
@@ -245,6 +257,7 @@ namespace Parkinson_Recorder.Data_Processing
                         if (_currentSensor >= _numberOfSensors)
                         {
                             _tempDataToSaveList.Add(_tempDataToSave);
+                            _tempDataToSave = new ImuData<float>(_numberOfSensors);
 
                             _currentSensor = 0;
                             _currentMeasure = _DataQueue.Time;
@@ -254,7 +267,10 @@ namespace Parkinson_Recorder.Data_Processing
                             if(_dataTresholdCouter >= _receivedMeasuresTreshold)
                             {
                                 while (_dataSaveBackgroundWorker.IsBusy)
-                                { }
+                                {
+                                    Console.WriteLine("data save");
+                                    System.Threading.Thread.Sleep(10);
+                                }
                                 _dataSaveBackgroundWorker.RunWorkerAsync();
 
                                 _dataTresholdCouter = 0;
@@ -268,7 +284,10 @@ namespace Parkinson_Recorder.Data_Processing
                                 _samplingFreq = 1000.0 / (double)(_currentTime - _previousTime).Milliseconds;
 
                                 while(_fftBackgroundWorker.IsBusy)
-                                { }
+                                {
+                                    Console.WriteLine("fft");
+                                    System.Threading.Thread.Sleep(10);
+                                }
                                 _xAxisFFTDataArray = _xAxisDataArray.Clone() as float[];
                                 _yAxisFFTDataArray = _yAxisDataArray.Clone() as float[];
                                 _zAxisFFTDataArray = _zAxisDataArray.Clone() as float[];
@@ -297,7 +316,7 @@ namespace Parkinson_Recorder.Data_Processing
             }
         }
 
-        private void ComputeFFTandSendData(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void _ComputeFFTandSendData(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             float[] imagValues = new float[_numberOfFFTPoints];
             Array.Clear(imagValues, 0, _numberOfFFTPoints);
@@ -372,7 +391,7 @@ namespace Parkinson_Recorder.Data_Processing
             return fftAbsValuesArray;
         }
 
-        private void CallDataSaveEvent(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void DataSaveEventCall(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             List<ImuData<float>> _tempList = _tempDataToSaveList;
             _tempDataToSaveList = new List<ImuData<float>>();
@@ -395,5 +414,9 @@ namespace Parkinson_Recorder.Data_Processing
             return hexValue;
         }
 #endif
+        public void Clear()
+        {
+            _InitializeComponents();
+        }
     }
 }
