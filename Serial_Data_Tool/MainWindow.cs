@@ -22,7 +22,6 @@ namespace Serial_Data_Tool
         private int _dataSendIdx = 0, _dataSendIdxInterval; // (time + (Ax + Ay + Az + Gx + Gy + Gz) * sens_count) * 4 hex chars
         private System.Diagnostics.Stopwatch _dataSendStopwatch = new System.Diagnostics.Stopwatch();
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -66,7 +65,7 @@ namespace Serial_Data_Tool
             DisconnectButton.Enabled = false;
         }
 
-        public void DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        public void DataReceived(object sender)
         {
             if (sender is SerialPort serialPort)
             {
@@ -120,6 +119,8 @@ namespace Serial_Data_Tool
 
         private void sendFileButton_Click(object sender, EventArgs e)
         {
+            stopTransmissionButton.Enabled = true;
+
             //Read the contents of the file into a stream
             using (StreamReader reader = new StreamReader(_sendFilePath))
             {
@@ -128,7 +129,6 @@ namespace Serial_Data_Tool
 
             dataSendTimer.Start();
             sendProgressBar.Visible = true;
-            _dataSendStopwatch.Start();
         }
 
         private void fileAdressTextBox_TextChanged(object sender, EventArgs e)
@@ -137,9 +137,14 @@ namespace Serial_Data_Tool
                 _sendFilePath = fileAdressTextBox.Text;
         }
 
-        private void SendMeasurement()
+        private void stopTransmissionButton_Click(object sender, EventArgs e)
         {
-            if(_dataSendIdx + _dataSendIdxInterval < _sendFileContent.Length)
+            _dataSendIdx = _sendFileContent.Length;
+        }
+
+        private bool SendMeasurement()
+        {
+            if (_dataSendIdx + _dataSendIdxInterval < _sendFileContent.Length)
             {
                 string message = _sendFileContent.Substring(_dataSendIdx, _dataSendIdxInterval);
                 byte[] buffer = System.Text.Encoding.ASCII.GetBytes(message);
@@ -156,15 +161,25 @@ namespace Serial_Data_Tool
                 sendProgressBar.Visible = false;
                 sendProgressBar.Value = 0;
                 _dataSendIdx = 0;
+
+                return false;
             }
 
-            Console.WriteLine(_dataSendStopwatch.ElapsedMilliseconds);
+            //Console.WriteLine(_dataSendStopwatch.ElapsedMilliseconds);
+            _dataSendStopwatch.Stop();
+            measurementTimeValueBox.Text = _dataSendStopwatch.ElapsedMilliseconds.ToString();
             _dataSendStopwatch.Restart();
+
+            return true;
         }
 
         private void dataSendTimer_Tick(object sender, EventArgs e)
         {
-            SendMeasurement();
-        }
+            if (!SendMeasurement())
+            {
+                stopTransmissionButton.Enabled = false;
+                measurementTimeValueBox.Text = "";
+            }
+        }   
     }
 }

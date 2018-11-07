@@ -39,13 +39,16 @@
             this.ConnectButton = new System.Windows.Forms.Button();
             this.DisconnectButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.sendProgressBar = new System.Windows.Forms.ProgressBar();
+            this.sendFileButton = new System.Windows.Forms.Button();
+            this.openFileDialogButton = new System.Windows.Forms.Button();
+            this.fileAdressTextBox = new System.Windows.Forms.TextBox();
             this.MessageDisplayBox = new System.Windows.Forms.TextBox();
             this.clearMsgWindowButton = new System.Windows.Forms.Button();
-            this.fileAdressTextBox = new System.Windows.Forms.TextBox();
-            this.openFileDialogButton = new System.Windows.Forms.Button();
-            this.sendFileButton = new System.Windows.Forms.Button();
             this.dataSendTimer = new System.Windows.Forms.Timer(this.components);
-            this.sendProgressBar = new System.Windows.Forms.ProgressBar();
+            this.stopTransmissionButton = new System.Windows.Forms.Button();
+            this.measurementTimeLabel = new System.Windows.Forms.Label();
+            this.measurementTimeValueBox = new System.Windows.Forms.TextBox();
             this.connectionSettingsGroupBox.SuspendLayout();
             this.ConnectionSettingsTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -161,6 +164,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.measurementTimeValueBox);
+            this.panel1.Controls.Add(this.measurementTimeLabel);
+            this.panel1.Controls.Add(this.stopTransmissionButton);
             this.panel1.Controls.Add(this.sendProgressBar);
             this.panel1.Controls.Add(this.sendFileButton);
             this.panel1.Controls.Add(this.openFileDialogButton);
@@ -170,6 +176,43 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(991, 81);
             this.panel1.TabIndex = 2;
+            // 
+            // sendProgressBar
+            // 
+            this.sendProgressBar.Location = new System.Drawing.Point(13, 46);
+            this.sendProgressBar.Name = "sendProgressBar";
+            this.sendProgressBar.Size = new System.Drawing.Size(100, 23);
+            this.sendProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.sendProgressBar.TabIndex = 3;
+            this.sendProgressBar.Visible = false;
+            // 
+            // sendFileButton
+            // 
+            this.sendFileButton.Location = new System.Drawing.Point(484, 6);
+            this.sendFileButton.Name = "sendFileButton";
+            this.sendFileButton.Size = new System.Drawing.Size(113, 23);
+            this.sendFileButton.TabIndex = 2;
+            this.sendFileButton.Text = "Send File Message";
+            this.sendFileButton.UseVisualStyleBackColor = true;
+            this.sendFileButton.Click += new System.EventHandler(this.sendFileButton_Click);
+            // 
+            // openFileDialogButton
+            // 
+            this.openFileDialogButton.Location = new System.Drawing.Point(451, 6);
+            this.openFileDialogButton.Name = "openFileDialogButton";
+            this.openFileDialogButton.Size = new System.Drawing.Size(27, 23);
+            this.openFileDialogButton.TabIndex = 1;
+            this.openFileDialogButton.Text = "...";
+            this.openFileDialogButton.UseVisualStyleBackColor = true;
+            this.openFileDialogButton.Click += new System.EventHandler(this.openFileDialogButton_Click);
+            // 
+            // fileAdressTextBox
+            // 
+            this.fileAdressTextBox.Location = new System.Drawing.Point(13, 7);
+            this.fileAdressTextBox.Name = "fileAdressTextBox";
+            this.fileAdressTextBox.Size = new System.Drawing.Size(432, 20);
+            this.fileAdressTextBox.TabIndex = 0;
+            this.fileAdressTextBox.TextChanged += new System.EventHandler(this.fileAdressTextBox_TextChanged);
             // 
             // MessageDisplayBox
             // 
@@ -191,47 +234,39 @@
             this.clearMsgWindowButton.UseVisualStyleBackColor = true;
             this.clearMsgWindowButton.Click += new System.EventHandler(this.clearMsgWindowButton_Click);
             // 
-            // fileAdressTextBox
-            // 
-            this.fileAdressTextBox.Location = new System.Drawing.Point(13, 7);
-            this.fileAdressTextBox.Name = "fileAdressTextBox";
-            this.fileAdressTextBox.Size = new System.Drawing.Size(432, 20);
-            this.fileAdressTextBox.TabIndex = 0;
-            this.fileAdressTextBox.TextChanged += new System.EventHandler(this.fileAdressTextBox_TextChanged);
-            // 
-            // openFileDialogButton
-            // 
-            this.openFileDialogButton.Location = new System.Drawing.Point(451, 6);
-            this.openFileDialogButton.Name = "openFileDialogButton";
-            this.openFileDialogButton.Size = new System.Drawing.Size(27, 23);
-            this.openFileDialogButton.TabIndex = 1;
-            this.openFileDialogButton.Text = "...";
-            this.openFileDialogButton.UseVisualStyleBackColor = true;
-            this.openFileDialogButton.Click += new System.EventHandler(this.openFileDialogButton_Click);
-            // 
-            // sendFileButton
-            // 
-            this.sendFileButton.Location = new System.Drawing.Point(484, 6);
-            this.sendFileButton.Name = "sendFileButton";
-            this.sendFileButton.Size = new System.Drawing.Size(113, 23);
-            this.sendFileButton.TabIndex = 2;
-            this.sendFileButton.Text = "Send File Message";
-            this.sendFileButton.UseVisualStyleBackColor = true;
-            this.sendFileButton.Click += new System.EventHandler(this.sendFileButton_Click);
-            // 
             // dataSendTimer
             // 
             this.dataSendTimer.Interval = 5;
             this.dataSendTimer.Tick += new System.EventHandler(this.dataSendTimer_Tick);
             // 
-            // sendProgressBar
+            // stopTransmissionButton
             // 
-            this.sendProgressBar.Location = new System.Drawing.Point(13, 46);
-            this.sendProgressBar.Name = "sendProgressBar";
-            this.sendProgressBar.Size = new System.Drawing.Size(100, 23);
-            this.sendProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.sendProgressBar.TabIndex = 3;
-            this.sendProgressBar.Visible = false;
+            this.stopTransmissionButton.Enabled = false;
+            this.stopTransmissionButton.Location = new System.Drawing.Point(603, 6);
+            this.stopTransmissionButton.Name = "stopTransmissionButton";
+            this.stopTransmissionButton.Size = new System.Drawing.Size(105, 23);
+            this.stopTransmissionButton.TabIndex = 4;
+            this.stopTransmissionButton.Text = "Stop Transmission";
+            this.stopTransmissionButton.UseVisualStyleBackColor = true;
+            this.stopTransmissionButton.Click += new System.EventHandler(this.stopTransmissionButton_Click);
+            // 
+            // measurementTimeLabel
+            // 
+            this.measurementTimeLabel.AutoSize = true;
+            this.measurementTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.measurementTimeLabel.Location = new System.Drawing.Point(132, 46);
+            this.measurementTimeLabel.Name = "measurementTimeLabel";
+            this.measurementTimeLabel.Size = new System.Drawing.Size(245, 16);
+            this.measurementTimeLabel.TabIndex = 5;
+            this.measurementTimeLabel.Text = "Measurement transmission time interval:";
+            // 
+            // measurementTimeValueBox
+            // 
+            this.measurementTimeValueBox.Location = new System.Drawing.Point(383, 45);
+            this.measurementTimeValueBox.Name = "measurementTimeValueBox";
+            this.measurementTimeValueBox.ReadOnly = true;
+            this.measurementTimeValueBox.Size = new System.Drawing.Size(131, 20);
+            this.measurementTimeValueBox.TabIndex = 6;
             // 
             // MainWindow
             // 
@@ -272,6 +307,9 @@
         private System.Windows.Forms.Button sendFileButton;
         private System.Windows.Forms.Timer dataSendTimer;
         private System.Windows.Forms.ProgressBar sendProgressBar;
+        private System.Windows.Forms.Button stopTransmissionButton;
+        private System.Windows.Forms.Label measurementTimeLabel;
+        private System.Windows.Forms.TextBox measurementTimeValueBox;
     }
 }
 

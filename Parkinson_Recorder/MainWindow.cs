@@ -10,7 +10,7 @@ namespace Parkinson_Recorder
     public partial class ProgramMainWindow : Form
     {
         private int _numberOfPointsInChart = 512;
-        private int _numberOfFFTPoints = 128;
+        private int _numberOfFFTPoints = 256;
 
         private CsvParser _csvParser = new CsvParser(@"C:\Users\plusq\Desktop\TempFile.csv", 3);
         private Data_Processing.PatientData _patientData;
@@ -165,19 +165,9 @@ namespace Parkinson_Recorder
             MessageBox.Show("Comparing Done");
         }
 
-        private void patientDataTable_Paint(object sender, PaintEventArgs e)
+        private void serialWatchdogTimer_Tick(object sender, EventArgs e)
         {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
+            _serialCtrl.RunByteReceivedEvent();
         }
     }
 }

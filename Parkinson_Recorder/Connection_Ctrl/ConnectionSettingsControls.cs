@@ -42,8 +42,11 @@ namespace Parkinson_Recorder
             DisconnectButton.Enabled = false;
         }
 
-        public void DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        public void DataReceived(object sender)
         {
+            serialWatchdogTimer.Enabled = true;
+            serialWatchdogTimer.Stop();
+
             if (sender is SerialPort serialPort)
             {
                 int count = serialPort.BytesToRead;
@@ -57,6 +60,8 @@ namespace Parkinson_Recorder
                 }
                 else Console.WriteLine("No data to read!");
             }
+
+            serialWatchdogTimer.Start();
         }
     }
 }

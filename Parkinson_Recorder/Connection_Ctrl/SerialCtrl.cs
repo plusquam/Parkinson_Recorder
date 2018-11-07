@@ -11,7 +11,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
     class SerialCtrl //: IDisposable
     {
         public List<int> BaudRates = new List<int> { 9600, 19200, 38400, 57600, 115200, 230400, 460800};
-        public delegate void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e);
+        public delegate void DataReceivedHandler(object sender);
         private DataReceivedHandler _receiveHandlerDelegate;
 
         private string[] _serialNames;
@@ -23,6 +23,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
         public string SerialName { get => _serialName; set => _serialName = value; }
         public int BaudRate { get => _baudRate; set => _baudRate = value; }
         public bool IsConnected { get => _isConnected; set => _isConnected = value; }
+        public SerialPort SerialPort { get => _serialPort; set => _serialPort = value; }
 
         public SerialCtrl()
         {
@@ -48,8 +49,8 @@ namespace Parkinson_Recorder.Connection_Ctrl
             _serialPort.StopBits = System.IO.Ports.StopBits.One;
 
             // Set the read/write timeouts
-            _serialPort.ReadTimeout = 500;
-            _serialPort.WriteTimeout = 500;
+            _serialPort.ReadTimeout = System.IO.Ports.SerialPort.InfiniteTimeout;
+            _serialPort.WriteTimeout = System.IO.Ports.SerialPort.InfiniteTimeout;
 
             try
             {
@@ -137,7 +138,15 @@ namespace Parkinson_Recorder.Connection_Ctrl
         {
             _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
             //await Task.Run(() => _receiveHandlerDelegate(sender, e));
-            _receiveHandlerDelegate(sender, e);
+            _receiveHandlerDelegate(sender);
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
+        }
+
+        public void RunByteReceivedEvent()
+        {
+            _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
+            //await Task.Run(() => _receiveHandlerDelegate(sender, e));
+            _receiveHandlerDelegate(_serialPort);
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
         }
     }

@@ -74,17 +74,17 @@
             this.patientTabPage = new System.Windows.Forms.TabPage();
             this.patientDataGroupBox = new System.Windows.Forms.GroupBox();
             this.patientDataTable = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.patientBirthDateLabel = new System.Windows.Forms.Label();
+            this.patientSexLabel = new System.Windows.Forms.Label();
             this.surnameComboBox = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.patientSurnameLabel = new System.Windows.Forms.Label();
+            this.patientNameLabel = new System.Windows.Forms.Label();
             this.nameComboBox = new System.Windows.Forms.ComboBox();
             this.genderListBox = new System.Windows.Forms.ListBox();
             this.birthDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.tabControlImageList = new System.Windows.Forms.ImageList(this.components);
             this.mainWindowStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.serialWatchdogTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.mainWindowTabControl.SuspendLayout();
             this.recorderViewTabPage.SuspendLayout();
@@ -551,11 +551,11 @@
             this.patientDataTable.ColumnCount = 2;
             this.patientDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.patientDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.patientDataTable.Controls.Add(this.label4, 0, 3);
-            this.patientDataTable.Controls.Add(this.label3, 0, 2);
+            this.patientDataTable.Controls.Add(this.patientBirthDateLabel, 0, 3);
+            this.patientDataTable.Controls.Add(this.patientSexLabel, 0, 2);
             this.patientDataTable.Controls.Add(this.surnameComboBox, 1, 1);
-            this.patientDataTable.Controls.Add(this.label2, 0, 1);
-            this.patientDataTable.Controls.Add(this.label1, 0, 0);
+            this.patientDataTable.Controls.Add(this.patientSurnameLabel, 0, 1);
+            this.patientDataTable.Controls.Add(this.patientNameLabel, 0, 0);
             this.patientDataTable.Controls.Add(this.nameComboBox, 1, 0);
             this.patientDataTable.Controls.Add(this.genderListBox, 1, 2);
             this.patientDataTable.Controls.Add(this.birthDateTimePicker, 1, 3);
@@ -568,29 +568,28 @@
             this.patientDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.patientDataTable.Size = new System.Drawing.Size(402, 138);
             this.patientDataTable.TabIndex = 0;
-            this.patientDataTable.Paint += new System.Windows.Forms.PaintEventHandler(this.patientDataTable_Paint);
             // 
-            // label4
+            // patientBirthDateLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(3, 105);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(144, 20);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Data urodzenia";
+            this.patientBirthDateLabel.AutoSize = true;
+            this.patientBirthDateLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.patientBirthDateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.patientBirthDateLabel.Location = new System.Drawing.Point(3, 105);
+            this.patientBirthDateLabel.Name = "patientBirthDateLabel";
+            this.patientBirthDateLabel.Size = new System.Drawing.Size(144, 20);
+            this.patientBirthDateLabel.TabIndex = 6;
+            this.patientBirthDateLabel.Text = "Data urodzenia";
             // 
-            // label3
+            // patientSexLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(3, 70);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(144, 20);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Płeć";
+            this.patientSexLabel.AutoSize = true;
+            this.patientSexLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.patientSexLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.patientSexLabel.Location = new System.Drawing.Point(3, 70);
+            this.patientSexLabel.Name = "patientSexLabel";
+            this.patientSexLabel.Size = new System.Drawing.Size(144, 20);
+            this.patientSexLabel.TabIndex = 4;
+            this.patientSexLabel.Text = "Płeć";
             // 
             // surnameComboBox
             // 
@@ -602,28 +601,27 @@
             this.surnameComboBox.Size = new System.Drawing.Size(246, 24);
             this.surnameComboBox.TabIndex = 3;
             // 
-            // label2
+            // patientSurnameLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(3, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(144, 20);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Nazwisko";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.patientSurnameLabel.AutoSize = true;
+            this.patientSurnameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.patientSurnameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.patientSurnameLabel.Location = new System.Drawing.Point(3, 35);
+            this.patientSurnameLabel.Name = "patientSurnameLabel";
+            this.patientSurnameLabel.Size = new System.Drawing.Size(144, 20);
+            this.patientSurnameLabel.TabIndex = 2;
+            this.patientSurnameLabel.Text = "Nazwisko";
             // 
-            // label1
+            // patientNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(144, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Imię";
+            this.patientNameLabel.AutoSize = true;
+            this.patientNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.patientNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.patientNameLabel.Location = new System.Drawing.Point(3, 0);
+            this.patientNameLabel.Name = "patientNameLabel";
+            this.patientNameLabel.Size = new System.Drawing.Size(144, 20);
+            this.patientNameLabel.TabIndex = 0;
+            this.patientNameLabel.Text = "Imię";
             // 
             // nameComboBox
             // 
@@ -672,9 +670,10 @@
             this.mainWindowStatusStrip.Text = "statusStrip1";
             this.mainWindowStatusStrip.Visible = false;
             // 
-            // timer1
+            // serialWatchdogTimer
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.serialWatchdogTimer.Interval = 20;
+            this.serialWatchdogTimer.Tick += new System.EventHandler(this.serialWatchdogTimer_Tick);
             // 
             // ProgramMainWindow
             // 
@@ -747,15 +746,15 @@
         private System.Windows.Forms.TabPage patientTabPage;
         private System.Windows.Forms.GroupBox patientDataGroupBox;
         private System.Windows.Forms.TableLayoutPanel patientDataTable;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label patientNameLabel;
         private System.Windows.Forms.ComboBox nameComboBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label patientSurnameLabel;
         private System.Windows.Forms.ComboBox surnameComboBox;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label patientSexLabel;
         private System.Windows.Forms.ListBox genderListBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label patientBirthDateLabel;
         private System.Windows.Forms.DateTimePicker birthDateTimePicker;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer serialWatchdogTimer;
     }
 }
 
