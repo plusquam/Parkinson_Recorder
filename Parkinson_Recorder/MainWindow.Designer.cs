@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramMainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,7 +84,10 @@
             this.birthDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.tabControlImageList = new System.Windows.Forms.ImageList(this.components);
             this.mainWindowStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripConnectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripConnectionStatusIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.serialWatchdogTimer = new System.Windows.Forms.Timer(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip.SuspendLayout();
             this.mainWindowTabControl.SuspendLayout();
             this.recorderViewTabPage.SuspendLayout();
@@ -100,6 +103,7 @@
             this.patientTabPage.SuspendLayout();
             this.patientDataGroupBox.SuspendLayout();
             this.patientDataTable.SuspendLayout();
+            this.mainWindowStatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -178,87 +182,87 @@
             // signalTimeChart
             // 
             this.signalTimeChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea3.AxisX.MaximumAutoSize = 100F;
-            chartArea3.AxisX.Minimum = 0D;
-            chartArea3.AxisX.Title = "Czas pomiaru [h.min.s.ms]";
-            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea3.AxisY.MaximumAutoSize = 100F;
-            chartArea3.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            chartArea3.AxisY.Title = "Przyspieszenie [mg]";
-            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea3.Name = "ChartArea1";
-            this.signalTimeChart.ChartAreas.Add(chartArea3);
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisX.MaximumAutoSize = 100F;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.Title = "Czas pomiaru [h.min.s.ms]";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.AxisY.MaximumAutoSize = 100F;
+            chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+            chartArea1.AxisY.Title = "Przyspieszenie [mg]";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.Name = "ChartArea1";
+            this.signalTimeChart.ChartAreas.Add(chartArea1);
             this.signalTimeChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalTimeChart.Enabled = false;
-            legend3.Name = "Legend1";
-            this.signalTimeChart.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.signalTimeChart.Legends.Add(legend1);
             this.signalTimeChart.Location = new System.Drawing.Point(0, 0);
             this.signalTimeChart.Name = "signalTimeChart";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Legend = "Legend1";
-            series7.Name = "XAxis";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Legend = "Legend1";
-            series8.Name = "YAxis";
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series9.Legend = "Legend1";
-            series9.Name = "ZAxis";
-            this.signalTimeChart.Series.Add(series7);
-            this.signalTimeChart.Series.Add(series8);
-            this.signalTimeChart.Series.Add(series9);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "XAxis";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "YAxis";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "ZAxis";
+            this.signalTimeChart.Series.Add(series1);
+            this.signalTimeChart.Series.Add(series2);
+            this.signalTimeChart.Series.Add(series3);
             this.signalTimeChart.Size = new System.Drawing.Size(878, 308);
             this.signalTimeChart.TabIndex = 4;
             this.signalTimeChart.Text = "signalTimeChart";
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            title3.Name = "TimeChartTitle";
-            title3.Text = "Przebieg czasowy pomiaru";
-            this.signalTimeChart.Titles.Add(title3);
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            title1.Name = "TimeChartTitle";
+            title1.Text = "Przebieg czasowy pomiaru";
+            this.signalTimeChart.Titles.Add(title1);
             // 
             // signalFrequencyChart
             // 
             this.signalFrequencyChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea4.AxisX.Interval = 3D;
-            chartArea4.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea4.AxisX.IntervalOffset = 1D;
-            chartArea4.AxisX.MaximumAutoSize = 100F;
-            chartArea4.AxisX.Minimum = -1D;
-            chartArea4.AxisX.Title = "Częstotliwość [Hz]";
-            chartArea4.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea4.AxisY.MaximumAutoSize = 100F;
-            chartArea4.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            chartArea4.AxisY.Title = "Amplituda [mg]";
-            chartArea4.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea4.Name = "ChartArea1";
-            this.signalFrequencyChart.ChartAreas.Add(chartArea4);
+            chartArea2.AxisX.Interval = 3D;
+            chartArea2.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea2.AxisX.IntervalOffset = 1D;
+            chartArea2.AxisX.MaximumAutoSize = 100F;
+            chartArea2.AxisX.Minimum = -1D;
+            chartArea2.AxisX.Title = "Częstotliwość [Hz]";
+            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea2.AxisY.MaximumAutoSize = 100F;
+            chartArea2.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+            chartArea2.AxisY.Title = "Amplituda [mg]";
+            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea2.Name = "ChartArea1";
+            this.signalFrequencyChart.ChartAreas.Add(chartArea2);
             this.signalFrequencyChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalFrequencyChart.Enabled = false;
-            legend4.Name = "Legend1";
-            this.signalFrequencyChart.Legends.Add(legend4);
+            legend2.Name = "Legend1";
+            this.signalFrequencyChart.Legends.Add(legend2);
             this.signalFrequencyChart.Location = new System.Drawing.Point(0, 0);
             this.signalFrequencyChart.Name = "signalFrequencyChart";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "XAxis";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "YAxis";
-            series12.ChartArea = "ChartArea1";
-            series12.Legend = "Legend1";
-            series12.Name = "ZAxis";
-            this.signalFrequencyChart.Series.Add(series10);
-            this.signalFrequencyChart.Series.Add(series11);
-            this.signalFrequencyChart.Series.Add(series12);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "XAxis";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "YAxis";
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "ZAxis";
+            this.signalFrequencyChart.Series.Add(series4);
+            this.signalFrequencyChart.Series.Add(series5);
+            this.signalFrequencyChart.Series.Add(series6);
             this.signalFrequencyChart.Size = new System.Drawing.Size(878, 304);
             this.signalFrequencyChart.TabIndex = 5;
             this.signalFrequencyChart.Text = "chart1";
-            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            title4.Name = "FreqChartTitle";
-            title4.Text = "Widmo częstotliwościowe sygnałów";
-            this.signalFrequencyChart.Titles.Add(title4);
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            title2.Name = "FreqChartTitle";
+            title2.Text = "Widmo częstotliwościowe sygnałów";
+            this.signalFrequencyChart.Titles.Add(title2);
             // 
             // tableLayoutPanel2
             // 
@@ -382,12 +386,14 @@
             // openMeasureButton
             // 
             this.openMeasureButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openMeasureButton.Enabled = false;
             this.openMeasureButton.Location = new System.Drawing.Point(143, 3);
             this.openMeasureButton.Name = "openMeasureButton";
             this.openMeasureButton.Size = new System.Drawing.Size(64, 64);
             this.openMeasureButton.TabIndex = 1;
             this.openMeasureButton.Text = "openMeasureButton";
             this.openMeasureButton.UseVisualStyleBackColor = true;
+            this.openMeasureButton.Visible = false;
             this.openMeasureButton.Click += new System.EventHandler(this.openMeasureButton_Click);
             // 
             // tableLayoutPanel1
@@ -663,17 +669,39 @@
             // 
             // mainWindowStatusStrip
             // 
+            this.mainWindowStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripConnectionStatusLabel,
+            this.toolStripConnectionStatusIcon});
             this.mainWindowStatusStrip.Location = new System.Drawing.Point(0, 740);
             this.mainWindowStatusStrip.Name = "mainWindowStatusStrip";
             this.mainWindowStatusStrip.Size = new System.Drawing.Size(992, 22);
             this.mainWindowStatusStrip.TabIndex = 2;
             this.mainWindowStatusStrip.Text = "statusStrip1";
-            this.mainWindowStatusStrip.Visible = false;
+            // 
+            // toolStripConnectionStatusLabel
+            // 
+            this.toolStripConnectionStatusLabel.Name = "toolStripConnectionStatusLabel";
+            this.toolStripConnectionStatusLabel.Size = new System.Drawing.Size(103, 17);
+            this.toolStripConnectionStatusLabel.Text = "Connection status";
+            // 
+            // toolStripConnectionStatusIcon
+            // 
+            this.toolStripConnectionStatusIcon.BackgroundImage = global::Parkinson_Recorder.Properties.Resources.red_dot_17x17;
+            this.toolStripConnectionStatusIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.toolStripConnectionStatusIcon.Name = "toolStripConnectionStatusIcon";
+            this.toolStripConnectionStatusIcon.Size = new System.Drawing.Size(19, 17);
+            this.toolStripConnectionStatusIcon.Text = "    ";
             // 
             // serialWatchdogTimer
             // 
             this.serialWatchdogTimer.Interval = 20;
             this.serialWatchdogTimer.Tick += new System.EventHandler(this.serialWatchdogTimer_Tick);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // ProgramMainWindow
             // 
@@ -705,6 +733,8 @@
             this.patientDataGroupBox.ResumeLayout(false);
             this.patientDataTable.ResumeLayout(false);
             this.patientDataTable.PerformLayout();
+            this.mainWindowStatusStrip.ResumeLayout(false);
+            this.mainWindowStatusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -755,6 +785,9 @@
         private System.Windows.Forms.Label patientBirthDateLabel;
         private System.Windows.Forms.DateTimePicker birthDateTimePicker;
         private System.Windows.Forms.Timer serialWatchdogTimer;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripConnectionStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripConnectionStatusIcon;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 

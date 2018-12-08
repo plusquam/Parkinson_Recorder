@@ -39,6 +39,9 @@
             this.ConnectButton = new System.Windows.Forms.Button();
             this.DisconnectButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.measurementTimeValueBox = new System.Windows.Forms.TextBox();
+            this.measurementTimeLabel = new System.Windows.Forms.Label();
+            this.stopTransmissionButton = new System.Windows.Forms.Button();
             this.sendProgressBar = new System.Windows.Forms.ProgressBar();
             this.sendFileButton = new System.Windows.Forms.Button();
             this.openFileDialogButton = new System.Windows.Forms.Button();
@@ -46,9 +49,6 @@
             this.MessageDisplayBox = new System.Windows.Forms.TextBox();
             this.clearMsgWindowButton = new System.Windows.Forms.Button();
             this.dataSendTimer = new System.Windows.Forms.Timer(this.components);
-            this.stopTransmissionButton = new System.Windows.Forms.Button();
-            this.measurementTimeLabel = new System.Windows.Forms.Label();
-            this.measurementTimeValueBox = new System.Windows.Forms.TextBox();
             this.connectionSettingsGroupBox.SuspendLayout();
             this.ConnectionSettingsTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -177,6 +177,35 @@
             this.panel1.Size = new System.Drawing.Size(991, 81);
             this.panel1.TabIndex = 2;
             // 
+            // measurementTimeValueBox
+            // 
+            this.measurementTimeValueBox.Location = new System.Drawing.Point(370, 52);
+            this.measurementTimeValueBox.Name = "measurementTimeValueBox";
+            this.measurementTimeValueBox.ReadOnly = true;
+            this.measurementTimeValueBox.Size = new System.Drawing.Size(131, 20);
+            this.measurementTimeValueBox.TabIndex = 6;
+            // 
+            // measurementTimeLabel
+            // 
+            this.measurementTimeLabel.AutoSize = true;
+            this.measurementTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.measurementTimeLabel.Location = new System.Drawing.Point(119, 53);
+            this.measurementTimeLabel.Name = "measurementTimeLabel";
+            this.measurementTimeLabel.Size = new System.Drawing.Size(245, 16);
+            this.measurementTimeLabel.TabIndex = 5;
+            this.measurementTimeLabel.Text = "Measurement transmission time interval:";
+            // 
+            // stopTransmissionButton
+            // 
+            this.stopTransmissionButton.Enabled = false;
+            this.stopTransmissionButton.Location = new System.Drawing.Point(603, 6);
+            this.stopTransmissionButton.Name = "stopTransmissionButton";
+            this.stopTransmissionButton.Size = new System.Drawing.Size(105, 23);
+            this.stopTransmissionButton.TabIndex = 4;
+            this.stopTransmissionButton.Text = "Stop Transmission";
+            this.stopTransmissionButton.UseVisualStyleBackColor = true;
+            this.stopTransmissionButton.Click += new System.EventHandler(this.stopTransmissionButton_Click);
+            // 
             // sendProgressBar
             // 
             this.sendProgressBar.Location = new System.Drawing.Point(13, 46);
@@ -238,35 +267,6 @@
             // 
             this.dataSendTimer.Interval = 5;
             this.dataSendTimer.Tick += new System.EventHandler(this.dataSendTimer_Tick);
-            // 
-            // stopTransmissionButton
-            // 
-            this.stopTransmissionButton.Enabled = false;
-            this.stopTransmissionButton.Location = new System.Drawing.Point(603, 6);
-            this.stopTransmissionButton.Name = "stopTransmissionButton";
-            this.stopTransmissionButton.Size = new System.Drawing.Size(105, 23);
-            this.stopTransmissionButton.TabIndex = 4;
-            this.stopTransmissionButton.Text = "Stop Transmission";
-            this.stopTransmissionButton.UseVisualStyleBackColor = true;
-            this.stopTransmissionButton.Click += new System.EventHandler(this.stopTransmissionButton_Click);
-            // 
-            // measurementTimeLabel
-            // 
-            this.measurementTimeLabel.AutoSize = true;
-            this.measurementTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.measurementTimeLabel.Location = new System.Drawing.Point(132, 46);
-            this.measurementTimeLabel.Name = "measurementTimeLabel";
-            this.measurementTimeLabel.Size = new System.Drawing.Size(245, 16);
-            this.measurementTimeLabel.TabIndex = 5;
-            this.measurementTimeLabel.Text = "Measurement transmission time interval:";
-            // 
-            // measurementTimeValueBox
-            // 
-            this.measurementTimeValueBox.Location = new System.Drawing.Point(383, 45);
-            this.measurementTimeValueBox.Name = "measurementTimeValueBox";
-            this.measurementTimeValueBox.ReadOnly = true;
-            this.measurementTimeValueBox.Size = new System.Drawing.Size(131, 20);
-            this.measurementTimeValueBox.TabIndex = 6;
             // 
             // MainWindow
             // 

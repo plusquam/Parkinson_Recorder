@@ -25,6 +25,7 @@ namespace Parkinson_Recorder
                 _serialCtrl.InitializePort(portName, int.Parse(baud), DataReceived);
             }
 
+            this.toolStripConnectionStatusIcon.BackgroundImage = global::Parkinson_Recorder.Properties.Resources.green_dot_17x17;
             DisconnectButton.Enabled = true;
         }
 
@@ -35,11 +36,14 @@ namespace Parkinson_Recorder
 
         private void DisconnectButton_Click(object sender, EventArgs e)
         {
+            DisconnectButton.Enabled = false;
             _serialCtrl.Disconnect();
             _imuData.Clear();
             _ClearFreqChart();
             _ClearTimeChart();
-            DisconnectButton.Enabled = false;
+            this.toolStripConnectionStatusIcon.BackgroundImage = global::Parkinson_Recorder.Properties.Resources.red_dot_17x17;
+
+            serialWatchdogTimer.Enabled = false;
         }
 
         public void DataReceived(object sender)

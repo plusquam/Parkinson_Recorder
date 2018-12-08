@@ -9,8 +9,8 @@ namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private int _numberOfPointsInChart = 512;
-        private int _numberOfFFTPoints = 256;
+        private int _numberOfPointsInChart = 256;
+        private int _numberOfFFTPoints = 128;
 
         private CsvParser _csvParser = new CsvParser(@"C:\Users\plusq\Desktop\TempFile.csv", 3);
         private Data_Processing.PatientData _patientData;
@@ -25,6 +25,7 @@ namespace Parkinson_Recorder
             _imuData.TimeChartRefreshEvent += _RefreshTimeChart_Invoker;
             _imuData.FftChartRefreshEvent += _RefreshFreqChart_Invoker;
             _imuData.SaveDataEvent += SaveDataToCsv;
+
             _InitializeTimeChart();
             _InitializeFreqChart();
 
@@ -131,9 +132,12 @@ namespace Parkinson_Recorder
         {
             signalFrequencyChart.ResetAutoValues();
 
-            signalFrequencyChart.Series["XAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.XAxisFFTDataArray);
-            signalFrequencyChart.Series["YAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.YAxisFFTDataArray);
-            signalFrequencyChart.Series["ZAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.ZAxisFFTDataArray);
+            if(_imuData.CurrentFftAxis == ImuDataProcessing.FftAxis.AxisX)
+                signalFrequencyChart.Series["XAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.XAxisFFTDataArray);
+            else if (_imuData.CurrentFftAxis == ImuDataProcessing.FftAxis.AxisY)
+                signalFrequencyChart.Series["YAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.YAxisFFTDataArray);
+            else if (_imuData.CurrentFftAxis == ImuDataProcessing.FftAxis.AxisZ)
+                signalFrequencyChart.Series["ZAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.ZAxisFFTDataArray);
 
             signalFrequencyChart.Invalidate();
         }
