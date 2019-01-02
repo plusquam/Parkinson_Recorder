@@ -9,8 +9,8 @@ namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private int _numberOfPointsInChart = 256;
-        private int _numberOfFFTPoints = 128;
+        private int _numberOfPointsInChart = 128;
+        private int _numberOfFFTPoints = 64;
 
         private CsvParser _csvParser = new CsvParser(@"C:\Users\plusq\Desktop\TempFile.csv", 3);
         private Data_Processing.PatientData _patientData;
@@ -132,7 +132,7 @@ namespace Parkinson_Recorder
         {
             signalFrequencyChart.ResetAutoValues();
 
-            if(_imuData.CurrentFftAxis == ImuDataProcessing.FftAxis.AxisX)
+            if (_imuData.CurrentFftAxis == ImuDataProcessing.FftAxis.AxisX)
                 signalFrequencyChart.Series["XAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.XAxisFFTDataArray);
             else if (_imuData.CurrentFftAxis == ImuDataProcessing.FftAxis.AxisY)
                 signalFrequencyChart.Series["YAxis"].Points.DataBindXY(_imuData.FreqFTTArray, _imuData.YAxisFFTDataArray);
@@ -172,6 +172,27 @@ namespace Parkinson_Recorder
         private void serialWatchdogTimer_Tick(object sender, EventArgs e)
         {
             _serialCtrl.RunByteReceivedEvent();
+        }
+
+        private void fftXRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            _imuData.FftAxisToChange = ImuDataProcessing.FftAxis.AxisX;
+            signalFrequencyChart.Series["YAxis"].Points.Clear();
+            signalFrequencyChart.Series["ZAxis"].Points.Clear();
+        }
+
+        private void fftYRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            _imuData.FftAxisToChange = ImuDataProcessing.FftAxis.AxisY;
+            signalFrequencyChart.Series["XAxis"].Points.Clear();
+            signalFrequencyChart.Series["ZAxis"].Points.Clear();
+        }
+
+        private void fftZRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            _imuData.FftAxisToChange = ImuDataProcessing.FftAxis.AxisZ;
+            signalFrequencyChart.Series["XAxis"].Points.Clear();
+            signalFrequencyChart.Series["YAxis"].Points.Clear();
         }
     }
 }

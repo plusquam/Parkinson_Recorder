@@ -21,6 +21,7 @@ namespace Parkinson_Recorder.Data_Processing
         private int _numberOfChartPoints;
         private SensorType _currentSensorType = SensorType.Accelerometer;
         private FftAxis _currentFftAxis = FftAxis.AxisX;
+        private FftAxis _fftAxisToChange = FftAxis.AxisX;
 
         private int _byteCounter = 0;
         private int _currentSensor = 0;
@@ -84,6 +85,7 @@ namespace Parkinson_Recorder.Data_Processing
         public int[] FreqFTTArray { get => _freqFTTArray; set => _freqFTTArray = value; }
         public List<ImuData<float>> TempDataToSaveList { get => _tempDataToSaveList; set => _tempDataToSaveList = value; }
         public FftAxis CurrentFftAxis { get => _currentFftAxis; set => _currentFftAxis = value; }
+        public FftAxis FftAxisToChange { get => _fftAxisToChange; set => _fftAxisToChange = value; }
 
         public ImuDataProcessing(int numberOfChartPoints, int numberOfFFTPoints)
         {
@@ -325,11 +327,22 @@ namespace Parkinson_Recorder.Data_Processing
                                 }
 
                                 if (_currentFftAxis == FftAxis.AxisX)
-                                    _xAxisFFTDataArray = _xAxisDataArray.Clone() as float[];
-                                if (_currentFftAxis == FftAxis.AxisY)
-                                    _yAxisFFTDataArray = _yAxisDataArray.Clone() as float[];
-                                if (_currentFftAxis == FftAxis.AxisZ)
-                                    _zAxisFFTDataArray = _zAxisDataArray.Clone() as float[];
+                                {
+                                    _xAxisFFTDataArray = _xAxisDataArray;
+                                    _xAxisDataArray = new float[_numberOfFFTPoints];
+                                }
+                                else if (_currentFftAxis == FftAxis.AxisY)
+                                {
+                                    _yAxisFFTDataArray = _yAxisDataArray;
+                                    _yAxisDataArray = new float[_numberOfFFTPoints];
+                                }
+                                else if (_currentFftAxis == FftAxis.AxisZ)
+                                {
+                                    _zAxisFFTDataArray = _zAxisDataArray;
+                                    _zAxisDataArray = new float[_numberOfFFTPoints];
+                                }
+
+                                _currentFftAxis = _fftAxisToChange;
 
                                 _fftBackgroundWorker.RunWorkerAsync();
                             }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.IO;
+using System.Threading;
 
 namespace Serial_Data_Tool
 {
@@ -21,6 +22,9 @@ namespace Serial_Data_Tool
         private int _numberOfSensors = 3;
         private int _dataSendIdx = 0, _dataSendIdxInterval; // (time + (Ax + Ay + Az + Gx + Gy + Gz) * sens_count) * 4 hex chars
         private System.Diagnostics.Stopwatch _dataSendStopwatch = new System.Diagnostics.Stopwatch();
+        private static Mutex _sendResultMutex = new Mutex();
+        private bool _sendDone = false;
+        private Thread _sendingThread;
 
         public MainWindow()
         {
@@ -129,6 +133,9 @@ namespace Serial_Data_Tool
 
             dataSendTimer.Start();
             sendProgressBar.Visible = true;
+
+            _sendingThread = new Thread(new ThreadStart(SendMeasurementThreadFunction));
+            _sendingThread.Start();
         }
 
         private void fileAdressTextBox_TextChanged(object sender, EventArgs e)
@@ -142,7 +149,7 @@ namespace Serial_Data_Tool
             _dataSendIdx = _sendFileContent.Length;
         }
 
-        private bool SendMeasurement()
+        private void SendMeasurementThreadFunction()
         {
             if (_dataSendIdx + _dataSendIdxInterval < _sendFileContent.Length)
             {
@@ -153,32 +160,56 @@ namespace Serial_Data_Tool
             
             _dataSendIdx += _dataSendIdxInterval;
             var progress = _dataSendIdx * 100 / _sendFileContent.Length;
-            sendProgressBar.Value = progress;
 
+            if (sendProgressBar.InvokeRequired)
+                Invoke(new MethodInvoker(() => sendProgressBar.Value = progress));
+            else
+                sendProgressBar.Value = progress;
+
+            _sendResultMutex.WaitOne();
             if (_dataSendIdx >= _sendFileContent.Length)
             {
-                dataSendTimer.Stop();
-                sendProgressBar.Visible = false;
-                sendProgressBar.Value = 0;
                 _dataSendIdx = 0;
-
-                return false;
+                _sendDone = true;
             }
+            else
+                _sendDone = false;
+
+            _sendResultMutex.ReleaseMutex();
 
             //Console.WriteLine(_dataSendStopwatch.ElapsedMilliseconds);
-            _dataSendStopwatch.Stop();
-            measurementTimeValueBox.Text = _dataSendStopwatch.ElapsedMilliseconds.ToString();
-            _dataSendStopwatch.Restart();
-
-            return true;
         }
 
         private void dataSendTimer_Tick(object sender, EventArgs e)
         {
-            if (!SendMeasurement())
+            bool joined = _sendingThread.Join(1);
+
+            if (joined)
             {
-                stopTransmissionButton.Enabled = false;
-                measurementTimeValueBox.Text = "";
+                _sendResultMutex.WaitOne();
+                if (_sendDone)
+                {
+                    _sendResultMutex.ReleaseMutex();
+
+                    dataSendTimer.Stop();
+                    sendProgressBar.Visible = false;
+                    sendProgressBar.Value = 0;
+
+                    stopTransmissionButton.Enabled = false;
+                    measurementTimeValueBox.Text = "";
+                    dataSendTimer.Stop();
+                }
+                else
+                {
+                    _sendResultMutex.ReleaseMutex();
+
+                    _sendingThread = new Thread(new ThreadStart(SendMeasurementThreadFunction));
+                    _sendingThread.Start();
+
+                    _dataSendStopwatch.Stop();
+                    measurementTimeValueBox.Text = _dataSendStopwatch.ElapsedMilliseconds.ToString();
+                    _dataSendStopwatch.Restart();
+                }
             }
         }   
     }
