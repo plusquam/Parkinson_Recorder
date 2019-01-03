@@ -1,4 +1,4 @@
-﻿#define TEST_FILE
+﻿//#define TEST_FILE
 //#define SHOW_DATA_ON_CONSOLE
 
 using System;
@@ -33,7 +33,7 @@ namespace Parkinson_Recorder.Data_Processing
         private TimeSpan _previousTime = new TimeSpan();
         private TimeSpan _currentTime = new TimeSpan();
 
-        private int _dataTresholdCouter = 0;
+        private int _dataTresholdCounter = 0;
         private int _receivedMeasuresTreshold = 100;
 
         private _DataQueue _currentMeasure = _DataQueue.Time;
@@ -132,7 +132,7 @@ namespace Parkinson_Recorder.Data_Processing
             _previousTime = new TimeSpan();
             _currentTime = new TimeSpan();
 
-            _dataTresholdCouter = 0;
+            _dataTresholdCounter = 0;
             _receivedMeasuresTreshold = 10;
 
             _currentMeasure = _DataQueue.Time;
@@ -153,7 +153,7 @@ namespace Parkinson_Recorder.Data_Processing
                         Console.Write(tempData);
                     #endif
 #else
-                    if (_byteCounter % 2 == 1)
+                if (_byteCounter % 2 == 1)
                 {
                     short tempData = (short)((_dataByteH << 8 ) + currentByte );
 #endif
@@ -300,8 +300,8 @@ namespace Parkinson_Recorder.Data_Processing
                             _currentMeasure = _DataQueue.Time;
                             _dataByteH = 0;
 
-                            _dataTresholdCouter++;
-                            if(_dataTresholdCouter >= _receivedMeasuresTreshold)
+                            _dataTresholdCounter++;
+                            if(_dataTresholdCounter >= _receivedMeasuresTreshold)
                             {
                                 while (_dataSaveBackgroundWorker.IsBusy)
                                 {
@@ -310,7 +310,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 }
                                 _dataSaveBackgroundWorker.RunWorkerAsync();
 
-                                _dataTresholdCouter = 0;
+                                _dataTresholdCounter = 0;
                                 TimeChartRefreshEvent(this);
                             }
 

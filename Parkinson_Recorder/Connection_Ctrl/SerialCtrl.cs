@@ -67,7 +67,7 @@ namespace Parkinson_Recorder.Connection_Ctrl
 
             _receiveHandlerDelegate = dataReceiveHandler;
             //_serialPort.ReceivedBytesThreshold = 2;
-            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_FirstByteReceived);
 
             _isConnected = true;
             Console.WriteLine("Serial port " + portName + " opened with baud: " + baud);
@@ -134,20 +134,20 @@ namespace Parkinson_Recorder.Connection_Ctrl
             return (byte)_serialPort.ReadByte();
         }
 
-        private void _ByteReceived(object sender, SerialDataReceivedEventArgs e)
+        private void _FirstByteReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
+            _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_FirstByteReceived);
             //await Task.Run(() => _receiveHandlerDelegate(sender, e));
             _receiveHandlerDelegate(sender);
-            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
+            //_serialPort.DataReceived += new SerialDataReceivedEventHandler(_FirstByteReceived);
         }
 
         public void RunByteReceivedEvent()
         {
-            _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_ByteReceived);
+            _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_FirstByteReceived);
             //await Task.Run(() => _receiveHandlerDelegate(sender, e));
             _receiveHandlerDelegate(_serialPort);
-            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_ByteReceived);
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(_FirstByteReceived);
         }
     }
 }

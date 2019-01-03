@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define TEST_FILE
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +24,7 @@ namespace Serial_Data_Tool
         private int _numberOfSensors = 3;
         private int _dataSendIdx = 0, _dataSendIdxInterval; // (time + (Ax + Ay + Az + Gx + Gy + Gz) * sens_count) * 4 hex chars
         private System.Diagnostics.Stopwatch _dataSendStopwatch = new System.Diagnostics.Stopwatch();
+
         private static Mutex _sendResultMutex = new Mutex();
         private bool _sendDone = false;
         private Thread _sendingThread;
@@ -135,6 +138,7 @@ namespace Serial_Data_Tool
             sendProgressBar.Visible = true;
 
             _sendingThread = new Thread(new ThreadStart(SendMeasurementThreadFunction));
+            _sendingThread.Priority = ThreadPriority.AboveNormal;
             _sendingThread.Start();
         }
 
@@ -155,6 +159,30 @@ namespace Serial_Data_Tool
             {
                 string message = _sendFileContent.Substring(_dataSendIdx, _dataSendIdxInterval);
                 byte[] buffer = System.Text.Encoding.ASCII.GetBytes(message);
+
+#if !TEST_FILE
+                byte[] tempBuffer = new byte[buffer.Length/2];
+                uint i = 0;
+                foreach (byte data in buffer)
+                {
+                    if (i % 2 == 1)
+                        tempBuffer[i / 2] = Convert.ToByte(tempBuffer[i / 2] << 4);
+                    else
+                        tempBuffer[i / 2] = 0;
+
+                    if (data >= 97) // 'a'
+                        tempBuffer[i / 2] |= Convert.ToByte((int)data - 97 + 10);
+                    else if (data >= 65) //'A'
+                        tempBuffer[i / 2] |= Convert.ToByte((int)data - 65 + 10);
+                    else
+                        tempBuffer[i / 2] |= Convert.ToByte((int)data - 48);
+
+                    i++;
+                }
+
+                buffer = tempBuffer;
+#endif
+
                 _serialCtrl.SendData(buffer, buffer.Length);
             }
             
@@ -204,6 +232,7 @@ namespace Serial_Data_Tool
                     _sendResultMutex.ReleaseMutex();
 
                     _sendingThread = new Thread(new ThreadStart(SendMeasurementThreadFunction));
+                    _sendingThread.Priority = ThreadPriority.AboveNormal;
                     _sendingThread.Start();
 
                     _dataSendStopwatch.Stop();
