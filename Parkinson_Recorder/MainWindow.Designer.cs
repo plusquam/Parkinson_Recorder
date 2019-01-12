@@ -131,7 +131,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Wyjście";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -763,6 +763,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "ProgramMainWindow";
             this.Text = "Parkinson Recorder";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProgramMainWindow_FormClosing);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.mainWindowTabControl.ResumeLayout(false);

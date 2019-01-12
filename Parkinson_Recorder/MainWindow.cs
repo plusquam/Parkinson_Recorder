@@ -15,9 +15,14 @@ namespace Parkinson_Recorder
         private CsvParser _csvParser = new CsvParser(@"C:\Users\plusq\Desktop\TempFile.csv", 3);
         private Data_Processing.PatientData _patientData;
 
+        private ProgramConfig _programConfig;
+
         public ProgramMainWindow()
         {
             InitializeComponent();
+
+            _programConfig = new ProgramConfig();
+
             SerialPortsListBox.DataSource = _serialCtrl.GetSerialPortsNames();
             BaudListBox.DataSource = _serialCtrl.BaudRates;
 
@@ -30,6 +35,11 @@ namespace Parkinson_Recorder
             _InitializeFreqChart();
 
             _csvParser.InitializeCsvFile();
+        }
+
+        ~ProgramMainWindow()
+        {
+            DisconnectButton_Click(this, EventArgs.Empty);
         }
 
         private void _InitializeTimeChart()
@@ -193,6 +203,11 @@ namespace Parkinson_Recorder
             _imuData.FftAxisToChange = ImuDataProcessing.FftAxis.AxisZ;
             signalFrequencyChart.Series["XAxis"].Points.Clear();
             signalFrequencyChart.Series["YAxis"].Points.Clear();
+        }
+
+        private void ProgramMainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DisconnectButton_Click(this, EventArgs.Empty);
         }
     }
 }

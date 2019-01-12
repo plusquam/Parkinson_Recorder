@@ -34,7 +34,7 @@ namespace Parkinson_Recorder.Data_Processing
         private TimeSpan _currentTime = new TimeSpan();
 
         private int _dataTresholdCounter = 0;
-        private int _receivedMeasuresTreshold = 100;
+        private int _receivedMeasuresTreshold;
 
         private _DataQueue _currentMeasure = _DataQueue.Time;
         
@@ -54,9 +54,9 @@ namespace Parkinson_Recorder.Data_Processing
         public LinkedList<float> YSeries { get => _ySeries; set => _ySeries = value; }
         public LinkedList<float> ZSeries { get => _zSeries; set => _zSeries = value; }
 
-        private float[]    _xAxisDataArray;
-        private float[]    _yAxisDataArray;
-        private float[]    _zAxisDataArray;
+        private float[]    _xAxisTempFFTDataArray;
+        private float[]    _yAxisTempFFTDataArray;
+        private float[]    _zAxisTempFFTDataArray;
         private float[]    _xAxisFFTDataArray;
         private float[]    _yAxisFFTDataArray;
         private float[]    _zAxisFFTDataArray;
@@ -106,9 +106,9 @@ namespace Parkinson_Recorder.Data_Processing
             _ySeries = new LinkedList<float>();
             _zSeries = new LinkedList<float>();
 
-            _xAxisDataArray = new float[_numberOfFFTPoints];
-            _yAxisDataArray = new float[_numberOfFFTPoints];
-            _zAxisDataArray = new float[_numberOfFFTPoints];
+            _xAxisTempFFTDataArray = new float[_numberOfFFTPoints];
+            _yAxisTempFFTDataArray = new float[_numberOfFFTPoints];
+            _zAxisTempFFTDataArray = new float[_numberOfFFTPoints];
             _xAxisFFTDataArray = new float[_numberOfFFTPoints];
             _yAxisFFTDataArray = new float[_numberOfFFTPoints];
             _zAxisFFTDataArray = new float[_numberOfFFTPoints];
@@ -133,7 +133,7 @@ namespace Parkinson_Recorder.Data_Processing
             _currentTime = new TimeSpan();
 
             _dataTresholdCounter = 0;
-            _receivedMeasuresTreshold = 10;
+            _receivedMeasuresTreshold = 20;
 
             _currentMeasure = _DataQueue.Time;
 
@@ -189,7 +189,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 {
                                     _xSeries.AddLast(dataValue);
                                     if(_currentFftAxis == FftAxis.AxisX)
-                                        _xAxisDataArray[_fftDataCounter] = dataValue;
+                                        _xAxisTempFFTDataArray[_fftDataCounter] = dataValue;
                                 }
                                 _tempDataToSave.XAccel[_currentSensor] = dataValue;
 
@@ -205,7 +205,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 {
                                     _ySeries.AddLast(dataValue);
                                     if (_currentFftAxis == FftAxis.AxisY)
-                                        _yAxisDataArray[_fftDataCounter] = dataValue;
+                                        _yAxisTempFFTDataArray[_fftDataCounter] = dataValue;
                                 }
                                 _tempDataToSave.YAccel[_currentSensor] = dataValue;
 
@@ -221,7 +221,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 {
                                     _zSeries.AddLast(dataValue);
                                     if (_currentFftAxis == FftAxis.AxisZ)
-                                        _zAxisDataArray[_fftDataCounter] = dataValue;
+                                        _zAxisTempFFTDataArray[_fftDataCounter] = dataValue;
                                 }
                                 _tempDataToSave.ZAccel[_currentSensor] = dataValue;
 
@@ -237,7 +237,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 {
                                     _xSeries.AddLast(dataValue);
                                     if (_currentFftAxis == FftAxis.AxisX)
-                                        _xAxisDataArray[_fftDataCounter] = dataValue;
+                                        _xAxisTempFFTDataArray[_fftDataCounter] = dataValue;
                                 }
                                 _tempDataToSave.XGyro[_currentSensor] = dataValue;
 
@@ -253,7 +253,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 {
                                     _ySeries.AddLast(dataValue);
                                     if (_currentFftAxis == FftAxis.AxisY)
-                                        _yAxisDataArray[_fftDataCounter] = dataValue;
+                                        _yAxisTempFFTDataArray[_fftDataCounter] = dataValue;
                                 }
                                 _tempDataToSave.YGyro[_currentSensor] = dataValue;
 
@@ -269,7 +269,7 @@ namespace Parkinson_Recorder.Data_Processing
                                 {
                                     _zSeries.AddLast(dataValue);
                                     if (_currentFftAxis == FftAxis.AxisZ)
-                                        _zAxisDataArray[_fftDataCounter] = dataValue;
+                                        _zAxisTempFFTDataArray[_fftDataCounter] = dataValue;
                                 }
                                 _tempDataToSave.ZGyro[_currentSensor] = dataValue;
 
@@ -328,18 +328,18 @@ namespace Parkinson_Recorder.Data_Processing
 
                                 if (_currentFftAxis == FftAxis.AxisX)
                                 {
-                                    _xAxisFFTDataArray = _xAxisDataArray;
-                                    _xAxisDataArray = new float[_numberOfFFTPoints];
+                                    _xAxisFFTDataArray = _xAxisTempFFTDataArray;
+                                    _xAxisTempFFTDataArray = new float[_numberOfFFTPoints];
                                 }
                                 else if (_currentFftAxis == FftAxis.AxisY)
                                 {
-                                    _yAxisFFTDataArray = _yAxisDataArray;
-                                    _yAxisDataArray = new float[_numberOfFFTPoints];
+                                    _yAxisFFTDataArray = _yAxisTempFFTDataArray;
+                                    _yAxisTempFFTDataArray = new float[_numberOfFFTPoints];
                                 }
                                 else if (_currentFftAxis == FftAxis.AxisZ)
                                 {
-                                    _zAxisFFTDataArray = _zAxisDataArray;
-                                    _zAxisDataArray = new float[_numberOfFFTPoints];
+                                    _zAxisFFTDataArray = _zAxisTempFFTDataArray;
+                                    _zAxisTempFFTDataArray = new float[_numberOfFFTPoints];
                                 }
 
                                 _currentFftAxis = _fftAxisToChange;
@@ -400,7 +400,7 @@ namespace Parkinson_Recorder.Data_Processing
             freqValues = new int[fftAbsValuesArray.Length];
             for (int i = 0; i < realValues.Length / 2; i++)
             {
-                fftAbsValuesArray[i] = 2.0 * Math.Sqrt( realValues[i]*realValues[i] + imagValues[i]*imagValues[i] );
+                fftAbsValuesArray[i] = Math.Sqrt( realValues[i]*realValues[i] + imagValues[i]*imagValues[i] );
                 freqValues[i] = (int)(smallestFreq * i);
             }
 
@@ -417,7 +417,7 @@ namespace Parkinson_Recorder.Data_Processing
             freqValues = new int[fftAbsValuesArray.Length];
             for (int i = 0; i < realValues.Length / 2; i++)
             {
-                fftAbsValuesArray[i] = 2.0f * (float)Math.Sqrt(realValues[i] * realValues[i] + imagValues[i] * imagValues[i]);
+                fftAbsValuesArray[i] = (float)Math.Sqrt(realValues[i] * realValues[i] + imagValues[i] * imagValues[i]);
                 freqValues[i] = (int)(smallestFreq * i);
             }
 

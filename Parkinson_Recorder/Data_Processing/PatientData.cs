@@ -10,6 +10,7 @@ namespace Parkinson_Recorder.Data_Processing
     {
         public enum Gender { Woman, Man };
 
+        private int _patientID;
         private string _name;
         private string _surname;
         private DateTime _birthDate;
@@ -26,6 +27,7 @@ namespace Parkinson_Recorder.Data_Processing
         public string Name { get => _name; set => _name = value; }
         public string Surname { get => _surname; set => _surname = value; }
         public DateTime BirthDate { get => _birthDate; set => _birthDate = value; }
-        internal Gender CurrentGender { get => _currentGender; set => _currentGender = value; }
+        public Gender CurrentGender { get => _currentGender; set => _currentGender = value; }
+        public int PatientID { get => _patientID; set => _patientID = value; }
     }
 }

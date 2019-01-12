@@ -48,19 +48,22 @@ namespace Parkinson_Recorder
 
         private void DisconnectButton_Click(object sender, EventArgs e)
         {
-            _readThreadMutex.WaitOne();
-            _runReadingThread = false;
-            _readThreadMutex.ReleaseMutex();
+            if (_serialCtrl.IsConnected)
+            {
+                _readThreadMutex.WaitOne();
+                _runReadingThread = false;
+                _readThreadMutex.ReleaseMutex();
 
-            if (_serialReadingThread.IsAlive)
-                _serialReadingThread.Join();
+                if (_serialReadingThread.IsAlive)
+                    _serialReadingThread.Join();
 
-            DisconnectButton.Enabled = false;
-            _serialCtrl.Disconnect();
-            _imuData.Clear();
-            _ClearFreqChart();
-            _ClearTimeChart();
-            this.toolStripConnectionStatusIcon.BackgroundImage = global::Parkinson_Recorder.Properties.Resources.red_dot_17x17;
+                DisconnectButton.Enabled = false;
+                _serialCtrl.Disconnect();
+                _imuData.Clear();
+                _ClearFreqChart();
+                _ClearTimeChart();
+                this.toolStripConnectionStatusIcon.BackgroundImage = global::Parkinson_Recorder.Properties.Resources.red_dot_17x17;
+            }
         }
 
         private void ReadSerialDataThreadFunction()
