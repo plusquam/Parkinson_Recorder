@@ -117,7 +117,7 @@ namespace Parkinson_Recorder
                 }
                 else
                 {
-                    Console.WriteLine("No data to read!");
+                    //Console.WriteLine("No data to read!");
                     return false;
                 }
             }
