@@ -31,6 +31,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\main_icon_64.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
       <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
@@ -94,9 +101,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icons\bar-chart_64.png" />
     <Content Include="Icons\green_dot_17x17.png" />
+    <Content Include="Icons\line-graph_64.png" />
+    <Content Include="Icons\main_icon_32.png" />
+    <Content Include="Icons\main_icon_64.ico" />
+    <Content Include="Icons\main_icon_64.png" />
+    <Content Include="Icons\man_tab_icon.png" />
+    <Content Include="Icons\measurement_tab_icon.png" />
+    <Content Include="Icons\new-file_64.png" />
+    <Content Include="Icons\open-folder-outline_64.png" />
+    <Content Include="Icons\record_64.png" />
     <Content Include="Icons\red_dot_17x17.png" />
-    <Content Include="Icons\services-portfolio.png" />
+    <Content Include="Icons\save-file-option_64.png" />
+    <Content Include="Icons\settings_tab_icon.png" />
+    <Content Include="Icons\stop_64.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

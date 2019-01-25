@@ -63,6 +63,16 @@ namespace Parkinson_Recorder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bar_chart_64 {
+            get {
+                object obj = ResourceManager.GetObject("bar-chart_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap green_dot_17x17 {
             get {
                 object obj = ResourceManager.GetObject("green_dot_17x17", resourceCulture);
@@ -73,9 +83,69 @@ namespace Parkinson_Recorder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap line_graph_64 {
+            get {
+                object obj = ResourceManager.GetObject("line-graph_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap new_file_64 {
+            get {
+                object obj = ResourceManager.GetObject("new-file_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap open_folder_outline_64 {
+            get {
+                object obj = ResourceManager.GetObject("open-folder-outline_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap record_64 {
+            get {
+                object obj = ResourceManager.GetObject("record_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap red_dot_17x17 {
             get {
                 object obj = ResourceManager.GetObject("red_dot_17x17", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save_file_option_64 {
+            get {
+                object obj = ResourceManager.GetObject("save-file-option_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stop_64 {
+            get {
+                object obj = ResourceManager.GetObject("stop_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

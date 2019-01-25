@@ -12,8 +12,10 @@ namespace Parkinson_Recorder
         private int _numberOfPointsInChart = 128;
         private int _numberOfFFTPoints = 64;
 
-        private CsvParser _csvParser = new CsvParser(@"C:\Users\plusq\Desktop\TempFile.csv", 3);
+        private CsvParser _csvParser;
         private Data_Processing.PatientData _patientData;
+
+        private bool _isRecording = false;
 
         private ProgramConfig _programConfig;
 
@@ -34,6 +36,7 @@ namespace Parkinson_Recorder
             _InitializeTimeChart();
             _InitializeFreqChart();
 
+            _csvParser = new CsvParser(_programConfig.Data.tempMeasurementFilePath, 3);
             _csvParser.InitializeCsvFile();
         }
 
@@ -93,6 +96,13 @@ namespace Parkinson_Recorder
                 this.signalTimeChart.Series[0].Points.Clear();
                 this.signalFrequencyChart.Enabled = true;
             }*/
+
+            _isRecording = !_isRecording;
+
+            if (_isRecording)
+                this.startStopMeasureButton.Image = Properties.Resources.stop_64;
+            else
+                this.startStopMeasureButton.Image = Properties.Resources.record_64;
         }
 
         private void ShowFrequencyChartButton_Click(object sender, EventArgs e)
@@ -169,14 +179,14 @@ namespace Parkinson_Recorder
 
         private void saveMeasureButton_Click(object sender, EventArgs e)
         {
-            String[] linesA = System.IO.File.ReadAllLines(_oryginalFile);
-            String[] linesB = System.IO.File.ReadAllLines(_newFile);
+            //String[] linesA = System.IO.File.ReadAllLines(_oryginalFile);
+            //String[] linesB = System.IO.File.ReadAllLines(_newFile);
 
-            IEnumerable<String> onlyB = linesB.Except(linesA);
+            //IEnumerable<String> onlyB = linesB.Except(linesA);
 
-            System.IO.File.WriteAllLines(_compareFile, onlyB);
+            //System.IO.File.WriteAllLines(_compareFile, onlyB);
 
-            MessageBox.Show("Comparing Done");
+            //MessageBox.Show("Comparing Done");
         }
 
         private void serialWatchdogTimer_Tick(object sender, EventArgs e)
