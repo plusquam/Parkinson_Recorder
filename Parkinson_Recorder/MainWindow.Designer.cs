@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramMainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,14 +78,14 @@
             this.patientTabPage = new System.Windows.Forms.TabPage();
             this.patientDataGroupBox = new System.Windows.Forms.GroupBox();
             this.patientDataTable = new System.Windows.Forms.TableLayoutPanel();
+            this.surnameTextBox = new System.Windows.Forms.TextBox();
             this.patientBirthDateLabel = new System.Windows.Forms.Label();
             this.patientSexLabel = new System.Windows.Forms.Label();
-            this.surnameComboBox = new System.Windows.Forms.ComboBox();
             this.patientSurnameLabel = new System.Windows.Forms.Label();
             this.patientNameLabel = new System.Windows.Forms.Label();
-            this.nameComboBox = new System.Windows.Forms.ComboBox();
             this.genderListBox = new System.Windows.Forms.ListBox();
             this.birthDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.tabControlImageList = new System.Windows.Forms.ImageList(this.components);
             this.mainWindowStatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripConnectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -169,7 +169,7 @@
             // chartsSplitContainer
             // 
             this.chartsSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartsSplitContainer.Location = new System.Drawing.Point(3, 111);
+            this.chartsSplitContainer.Location = new System.Drawing.Point(3, 91);
             this.chartsSplitContainer.Name = "chartsSplitContainer";
             this.chartsSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -182,94 +182,94 @@
             // 
             this.chartsSplitContainer.Panel2.Controls.Add(this.signalFrequencyChart);
             this.chartsSplitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.chartsSplitContainer.Size = new System.Drawing.Size(924, 562);
-            this.chartsSplitContainer.SplitterDistance = 281;
+            this.chartsSplitContainer.Size = new System.Drawing.Size(924, 582);
+            this.chartsSplitContainer.SplitterDistance = 291;
             this.chartsSplitContainer.TabIndex = 2;
             // 
             // signalTimeChart
             // 
             this.signalTimeChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea3.AxisX.MaximumAutoSize = 100F;
-            chartArea3.AxisX.Minimum = 0D;
-            chartArea3.AxisX.Title = "Czas pomiaru [h.min.s.ms]";
-            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea3.AxisY.MaximumAutoSize = 100F;
-            chartArea3.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            chartArea3.AxisY.Title = "Przyspieszenie [mg]";
-            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea3.Name = "ChartArea1";
-            this.signalTimeChart.ChartAreas.Add(chartArea3);
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisX.MaximumAutoSize = 100F;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.Title = "Czas pomiaru [h.min.s.ms]";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.AxisY.MaximumAutoSize = 100F;
+            chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+            chartArea1.AxisY.Title = "Przyspieszenie [mg]";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.Name = "ChartArea1";
+            this.signalTimeChart.ChartAreas.Add(chartArea1);
             this.signalTimeChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalTimeChart.Enabled = false;
-            legend3.Name = "Legend1";
-            this.signalTimeChart.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.signalTimeChart.Legends.Add(legend1);
             this.signalTimeChart.Location = new System.Drawing.Point(0, 0);
             this.signalTimeChart.Name = "signalTimeChart";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Legend = "Legend1";
-            series7.Name = "XAxis";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Legend = "Legend1";
-            series8.Name = "YAxis";
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series9.Legend = "Legend1";
-            series9.Name = "ZAxis";
-            this.signalTimeChart.Series.Add(series7);
-            this.signalTimeChart.Series.Add(series8);
-            this.signalTimeChart.Series.Add(series9);
-            this.signalTimeChart.Size = new System.Drawing.Size(924, 281);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "XAxis";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "YAxis";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "ZAxis";
+            this.signalTimeChart.Series.Add(series1);
+            this.signalTimeChart.Series.Add(series2);
+            this.signalTimeChart.Series.Add(series3);
+            this.signalTimeChart.Size = new System.Drawing.Size(924, 291);
             this.signalTimeChart.TabIndex = 4;
             this.signalTimeChart.Text = "signalTimeChart";
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            title3.Name = "TimeChartTitle";
-            title3.Text = "Przebieg czasowy pomiaru";
-            this.signalTimeChart.Titles.Add(title3);
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            title1.Name = "TimeChartTitle";
+            title1.Text = "Przebieg czasowy pomiaru";
+            this.signalTimeChart.Titles.Add(title1);
             // 
             // signalFrequencyChart
             // 
             this.signalFrequencyChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea4.AxisX.Interval = 3D;
-            chartArea4.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea4.AxisX.IntervalOffset = 1D;
-            chartArea4.AxisX.MaximumAutoSize = 100F;
-            chartArea4.AxisX.Minimum = -1D;
-            chartArea4.AxisX.Title = "Częstotliwość [Hz]";
-            chartArea4.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea4.AxisY.MaximumAutoSize = 100F;
-            chartArea4.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            chartArea4.AxisY.Title = "Amplituda [mg]";
-            chartArea4.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea4.Name = "ChartArea1";
-            this.signalFrequencyChart.ChartAreas.Add(chartArea4);
+            chartArea2.AxisX.Interval = 3D;
+            chartArea2.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea2.AxisX.IntervalOffset = 1D;
+            chartArea2.AxisX.MaximumAutoSize = 100F;
+            chartArea2.AxisX.Minimum = -1D;
+            chartArea2.AxisX.Title = "Częstotliwość [Hz]";
+            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea2.AxisY.MaximumAutoSize = 100F;
+            chartArea2.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+            chartArea2.AxisY.Title = "Amplituda [mg]";
+            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea2.Name = "ChartArea1";
+            this.signalFrequencyChart.ChartAreas.Add(chartArea2);
             this.signalFrequencyChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signalFrequencyChart.Enabled = false;
-            legend4.Name = "Legend1";
-            this.signalFrequencyChart.Legends.Add(legend4);
+            legend2.Name = "Legend1";
+            this.signalFrequencyChart.Legends.Add(legend2);
             this.signalFrequencyChart.Location = new System.Drawing.Point(0, 0);
             this.signalFrequencyChart.Name = "signalFrequencyChart";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "XAxis";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "YAxis";
-            series12.ChartArea = "ChartArea1";
-            series12.Legend = "Legend1";
-            series12.Name = "ZAxis";
-            this.signalFrequencyChart.Series.Add(series10);
-            this.signalFrequencyChart.Series.Add(series11);
-            this.signalFrequencyChart.Series.Add(series12);
-            this.signalFrequencyChart.Size = new System.Drawing.Size(924, 277);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "XAxis";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "YAxis";
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "ZAxis";
+            this.signalFrequencyChart.Series.Add(series4);
+            this.signalFrequencyChart.Series.Add(series5);
+            this.signalFrequencyChart.Series.Add(series6);
+            this.signalFrequencyChart.Size = new System.Drawing.Size(924, 287);
             this.signalFrequencyChart.TabIndex = 5;
             this.signalFrequencyChart.Text = "chart1";
-            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            title4.Name = "FreqChartTitle";
-            title4.Text = "Widmo częstotliwościowe sygnałów";
-            this.signalFrequencyChart.Titles.Add(title4);
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            title2.Name = "FreqChartTitle";
+            title2.Text = "Widmo częstotliwościowe sygnałów";
+            this.signalFrequencyChart.Titles.Add(title2);
             // 
             // tableLayoutPanel2
             // 
@@ -283,7 +283,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 283F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 285F));
             this.tableLayoutPanel2.Controls.Add(this.newMeasureButton, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.startStopMeasureButton, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.splitter1, 3, 0);
@@ -300,7 +300,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(924, 108);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(924, 88);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // newMeasureButton
@@ -512,10 +512,10 @@
             this.ConnectionSettingsTableLayoutPanel.Location = new System.Drawing.Point(3, 22);
             this.ConnectionSettingsTableLayoutPanel.Name = "ConnectionSettingsTableLayoutPanel";
             this.ConnectionSettingsTableLayoutPanel.RowCount = 3;
-            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ConnectionSettingsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.ConnectionSettingsTableLayoutPanel.Size = new System.Drawing.Size(478, 201);
+            this.ConnectionSettingsTableLayoutPanel.Size = new System.Drawing.Size(478, 301);
             this.ConnectionSettingsTableLayoutPanel.TabIndex = 0;
             // 
             // PortNameLabel
@@ -525,7 +525,7 @@
             this.PortNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.PortNameLabel.Location = new System.Drawing.Point(3, 0);
             this.PortNameLabel.Name = "PortNameLabel";
-            this.PortNameLabel.Size = new System.Drawing.Size(94, 60);
+            this.PortNameLabel.Size = new System.Drawing.Size(94, 123);
             this.PortNameLabel.TabIndex = 0;
             this.PortNameLabel.Text = "Serial Port:";
             this.PortNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -535,9 +535,9 @@
             this.BaudRateLabel.AutoSize = true;
             this.BaudRateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BaudRateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.BaudRateLabel.Location = new System.Drawing.Point(3, 60);
+            this.BaudRateLabel.Location = new System.Drawing.Point(3, 123);
             this.BaudRateLabel.Name = "BaudRateLabel";
-            this.BaudRateLabel.Size = new System.Drawing.Size(94, 101);
+            this.BaudRateLabel.Size = new System.Drawing.Size(94, 138);
             this.BaudRateLabel.TabIndex = 1;
             this.BaudRateLabel.Text = "Baud Rate:";
             this.BaudRateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -548,16 +548,16 @@
             this.SerialPortsListBox.FormattingEnabled = true;
             this.SerialPortsListBox.Location = new System.Drawing.Point(103, 3);
             this.SerialPortsListBox.Name = "SerialPortsListBox";
-            this.SerialPortsListBox.Size = new System.Drawing.Size(194, 54);
+            this.SerialPortsListBox.Size = new System.Drawing.Size(194, 117);
             this.SerialPortsListBox.TabIndex = 2;
             // 
             // BaudListBox
             // 
             this.BaudListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BaudListBox.FormattingEnabled = true;
-            this.BaudListBox.Location = new System.Drawing.Point(103, 63);
+            this.BaudListBox.Location = new System.Drawing.Point(103, 126);
             this.BaudListBox.Name = "BaudListBox";
-            this.BaudListBox.Size = new System.Drawing.Size(194, 95);
+            this.BaudListBox.Size = new System.Drawing.Size(194, 132);
             this.BaudListBox.TabIndex = 3;
             // 
             // ReScanButton
@@ -573,7 +573,7 @@
             // ConnectButton
             // 
             this.ConnectButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ConnectButton.Location = new System.Drawing.Point(103, 164);
+            this.ConnectButton.Location = new System.Drawing.Point(103, 264);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(155, 34);
             this.ConnectButton.TabIndex = 5;
@@ -585,7 +585,7 @@
             // 
             this.DisconnectButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.DisconnectButton.Enabled = false;
-            this.DisconnectButton.Location = new System.Drawing.Point(303, 164);
+            this.DisconnectButton.Location = new System.Drawing.Point(303, 264);
             this.DisconnectButton.Name = "DisconnectButton";
             this.DisconnectButton.Size = new System.Drawing.Size(75, 34);
             this.DisconnectButton.TabIndex = 6;
@@ -629,14 +629,14 @@
             this.patientDataTable.ColumnCount = 2;
             this.patientDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.patientDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.patientDataTable.Controls.Add(this.surnameTextBox, 1, 1);
             this.patientDataTable.Controls.Add(this.patientBirthDateLabel, 0, 3);
             this.patientDataTable.Controls.Add(this.patientSexLabel, 0, 2);
-            this.patientDataTable.Controls.Add(this.surnameComboBox, 1, 1);
             this.patientDataTable.Controls.Add(this.patientSurnameLabel, 0, 1);
             this.patientDataTable.Controls.Add(this.patientNameLabel, 0, 0);
-            this.patientDataTable.Controls.Add(this.nameComboBox, 1, 0);
             this.patientDataTable.Controls.Add(this.genderListBox, 1, 2);
             this.patientDataTable.Controls.Add(this.birthDateTimePicker, 1, 3);
+            this.patientDataTable.Controls.Add(this.nameTextBox, 1, 0);
             this.patientDataTable.Location = new System.Drawing.Point(6, 19);
             this.patientDataTable.Name = "patientDataTable";
             this.patientDataTable.RowCount = 4;
@@ -646,6 +646,16 @@
             this.patientDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.patientDataTable.Size = new System.Drawing.Size(402, 145);
             this.patientDataTable.TabIndex = 0;
+            // 
+            // surnameTextBox
+            // 
+            this.surnameTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.surnameTextBox.Location = new System.Drawing.Point(153, 38);
+            this.surnameTextBox.MaxLength = 100;
+            this.surnameTextBox.Name = "surnameTextBox";
+            this.surnameTextBox.Size = new System.Drawing.Size(246, 20);
+            this.surnameTextBox.TabIndex = 9;
+            this.surnameTextBox.TextChanged += new System.EventHandler(this.PatientDataChanged);
             // 
             // patientBirthDateLabel
             // 
@@ -669,16 +679,6 @@
             this.patientSexLabel.TabIndex = 4;
             this.patientSexLabel.Text = "Płeć";
             // 
-            // surnameComboBox
-            // 
-            this.surnameComboBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.surnameComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.surnameComboBox.FormattingEnabled = true;
-            this.surnameComboBox.Location = new System.Drawing.Point(153, 38);
-            this.surnameComboBox.Name = "surnameComboBox";
-            this.surnameComboBox.Size = new System.Drawing.Size(246, 24);
-            this.surnameComboBox.TabIndex = 3;
-            // 
             // patientSurnameLabel
             // 
             this.patientSurnameLabel.AutoSize = true;
@@ -701,16 +701,6 @@
             this.patientNameLabel.TabIndex = 0;
             this.patientNameLabel.Text = "Imię";
             // 
-            // nameComboBox
-            // 
-            this.nameComboBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nameComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.nameComboBox.FormattingEnabled = true;
-            this.nameComboBox.Location = new System.Drawing.Point(153, 3);
-            this.nameComboBox.Name = "nameComboBox";
-            this.nameComboBox.Size = new System.Drawing.Size(246, 24);
-            this.nameComboBox.TabIndex = 1;
-            // 
             // genderListBox
             // 
             this.genderListBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -724,16 +714,28 @@
             this.genderListBox.Name = "genderListBox";
             this.genderListBox.Size = new System.Drawing.Size(246, 36);
             this.genderListBox.TabIndex = 5;
+            this.genderListBox.SelectedValueChanged += new System.EventHandler(this.PatientDataChanged);
             // 
             // birthDateTimePicker
             // 
             this.birthDateTimePicker.Dock = System.Windows.Forms.DockStyle.Top;
             this.birthDateTimePicker.Location = new System.Drawing.Point(153, 117);
-            this.birthDateTimePicker.MaxDate = new System.DateTime(2018, 8, 8, 20, 50, 25, 857);
+            this.birthDateTimePicker.MaxDate = new System.DateTime(2019, 2, 15, 0, 0, 0, 0);
             this.birthDateTimePicker.Name = "birthDateTimePicker";
             this.birthDateTimePicker.Size = new System.Drawing.Size(246, 20);
             this.birthDateTimePicker.TabIndex = 7;
             this.birthDateTimePicker.Value = new System.DateTime(2018, 8, 8, 20, 50, 25, 857);
+            this.birthDateTimePicker.ValueChanged += new System.EventHandler(this.PatientDataChanged);
+            // 
+            // nameTextBox
+            // 
+            this.nameTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nameTextBox.Location = new System.Drawing.Point(153, 3);
+            this.nameTextBox.MaxLength = 100;
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(246, 20);
+            this.nameTextBox.TabIndex = 8;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.PatientDataChanged);
             // 
             // tabControlImageList
             // 
@@ -846,9 +848,7 @@
         private System.Windows.Forms.GroupBox patientDataGroupBox;
         private System.Windows.Forms.TableLayoutPanel patientDataTable;
         private System.Windows.Forms.Label patientNameLabel;
-        private System.Windows.Forms.ComboBox nameComboBox;
         private System.Windows.Forms.Label patientSurnameLabel;
-        private System.Windows.Forms.ComboBox surnameComboBox;
         private System.Windows.Forms.Label patientSexLabel;
         private System.Windows.Forms.ListBox genderListBox;
         private System.Windows.Forms.Label patientBirthDateLabel;
@@ -859,6 +859,8 @@
         private System.Windows.Forms.RadioButton fftZRadioButton;
         private System.Windows.Forms.RadioButton fftYRadioButton;
         private System.Windows.Forms.RadioButton fftXRadioButton;
+        private System.Windows.Forms.TextBox surnameTextBox;
+        private System.Windows.Forms.TextBox nameTextBox;
     }
 }
 

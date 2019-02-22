@@ -500,5 +500,10 @@ namespace Parkinson_Recorder.Data_Processing
             _InitializeComponents();
             Console.WriteLine("Components cleared.");
         }
+
+        public void SaveData()
+        {
+            DataSaveEventCall(this, null);
+        }
     }
 }

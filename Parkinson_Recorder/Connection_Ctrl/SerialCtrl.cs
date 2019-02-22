@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 namespace Parkinson_Recorder.Connection_Ctrl
 {
@@ -66,7 +67,6 @@ namespace Parkinson_Recorder.Connection_Ctrl
             }
 
             _receiveHandlerDelegate = dataReceiveHandler;
-            //_serialPort.ReceivedBytesThreshold = 2;
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_FirstByteReceived);
 
             _isConnected = true;
@@ -137,17 +137,34 @@ namespace Parkinson_Recorder.Connection_Ctrl
         private void _FirstByteReceived(object sender, SerialDataReceivedEventArgs e)
         {
             _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_FirstByteReceived);
-            //await Task.Run(() => _receiveHandlerDelegate(sender, e));
             _receiveHandlerDelegate(sender);
-            //_serialPort.DataReceived += new SerialDataReceivedEventHandler(_FirstByteReceived);
         }
 
         public void RunByteReceivedEvent()
         {
             _serialPort.DataReceived -= new SerialDataReceivedEventHandler(_FirstByteReceived);
-            //await Task.Run(() => _receiveHandlerDelegate(sender, e));
             _receiveHandlerDelegate(_serialPort);
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_FirstByteReceived);
+        }
+
+        public bool CheckConnection()
+        {
+            _isConnected = _serialPort.IsOpen;
+            return _isConnected;
+        }
+
+        //TODO
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool SendStartCommand()
+        {
+            return true;//SendData("START\r\n");
+        }
+
+        //TODO
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool SendStopCommand()
+        {
+            return true;//SendData("STOP\r\n");
         }
     }
 }

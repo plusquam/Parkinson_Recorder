@@ -11,42 +11,56 @@ namespace Parkinson_Recorder.Data_Processing
     {
         private string _fileName;
         private StreamWriter _fileStream;
-        private int _sensorCount = 1;
+        private int _sensorCount;
+
+        private bool _tempFileExist = false;
+        private bool _fileSaved = false;
+
+        string _targetFileName;
+        
 
         public CsvParser(string fileName, int sensorsCount)
         {
             _fileName = fileName;
-            _fileStream = File.CreateText(_fileName);
-
             _sensorCount = sensorsCount;
         }
 
-        public void InitializeCsvFile()
+        public bool InitializeCsvFile(Data_Processing.PatientData patientData)
         {
-            _fileStream.AutoFlush = false;
-            _fileStream.Write("Czas [ms],");
-
-            for(int i = 0; i < _sensorCount; i++)
+            try
             {
-                string textToWrite = "Akcelerometr_" + i.ToString() + "_X [mg],";
-                _fileStream.Write(textToWrite);
-                textToWrite = "Akcelerometr_" + i.ToString() + "_Y [mg],";
-                _fileStream.Write(textToWrite);
-                textToWrite = "Akcelerometr_" + i.ToString() + "_Z [mg],";
-                _fileStream.Write(textToWrite);
-
-                textToWrite = "Żyroskop_" + i.ToString() + "_X [mg],";
-                _fileStream.Write(textToWrite);
-                textToWrite = "Żyroskop_" + i.ToString() + "_Y [mg],";
-                _fileStream.Write(textToWrite);
-                textToWrite = "Żyroskop_" + i.ToString() + "_Z [mg]";
-                if (i != _sensorCount - 1)
-                    textToWrite += ",";
-                _fileStream.Write(textToWrite);
+                _fileStream = File.CreateText(_fileName);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                System.Windows.Forms.MessageBox.Show("Plik tymczasowy " + _fileName + " jest obecnie zajęty przez inny proces. Zwolnij dostęp do pliku tymczasowego.", 
+                                                     "Brak dostępu do pliku!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                return false;
             }
 
-            _fileStream.Write(_fileStream.NewLine);
+            _fileStream.AutoFlush = false;
+
+            _targetFileName = patientData.Surname + '_' + patientData.Name + '_' + DateTime.Now.ToString("dd-MM-yy_HH-mm-ss") + ".csv";
+
+            // Patient data saving
+            _fileStream.Write("Dane pacjenta:" + _fileStream.NewLine);
+            _fileStream.Write("Imie:,");
+            _fileStream.Write(patientData.Name + _fileStream.NewLine);
+            _fileStream.Write("Nazwisko:,");
+            _fileStream.Write(patientData.Surname + _fileStream.NewLine);
+            _fileStream.Write("Plec:,");
+            if(patientData.GetGender == PatientData.Gender.Man)
+                _fileStream.Write("M" + _fileStream.NewLine);
+            else
+                _fileStream.Write("K" + _fileStream.NewLine);
+
+            _fileStream.Write("Data urodzenia:,");
+            _fileStream.Write(patientData.BirthDate.ToString("dd.MM.yyyy") + _fileStream.NewLine);    
             _fileStream.Flush();
+
+            _tempFileExist = true;
+
+            return true;
         }
 
         public void WriteData<T>(ImuData<T> imuData)
@@ -119,7 +133,57 @@ namespace Parkinson_Recorder.Data_Processing
             }
         }
 
+        public void WriteNewMeasurement()
+        {
+            _fileStream.Write(_fileStream.NewLine);
+            _fileStream.Write(_fileStream.NewLine);
+            _fileStream.Write("Pomiar rozpoczety:," + DateTime.Now.ToString("dd-MM-yy HH:mm:ss"));
+            _fileStream.Write(_fileStream.NewLine);
+            _fileStream.Write("Czas [ms],");
+
+            for (int i = 0; i < _sensorCount; i++)
+            {
+                string textToWrite = "Akcelerometr_" + i.ToString() + "_X [mg],";
+                _fileStream.Write(textToWrite);
+                textToWrite = "Akcelerometr_" + i.ToString() + "_Y [mg],";
+                _fileStream.Write(textToWrite);
+                textToWrite = "Akcelerometr_" + i.ToString() + "_Z [mg],";
+                _fileStream.Write(textToWrite);
+
+                textToWrite = "Zyroskop_" + i.ToString() + "_X [mg],";
+                _fileStream.Write(textToWrite);
+                textToWrite = "Zyroskop_" + i.ToString() + "_Y [mg],";
+                _fileStream.Write(textToWrite);
+                textToWrite = "Zyroskop_" + i.ToString() + "_Z [mg]";
+                if (i != _sensorCount - 1)
+                    textToWrite += ",";
+                _fileStream.Write(textToWrite);
+            }
+
+            _fileStream.Write(_fileStream.NewLine);
+            _fileStream.Flush();
+        }
+
+        // TODO handlih all data saving cases
+        public bool SaveFile()
+        {
+            System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+            dialog.Filter = "csv files (*.csv)|*.csv";
+            dialog.DefaultExt = "csv";
+            dialog.FileName = _targetFileName;
+            dialog.AddExtension = true;
+            dialog.OverwritePrompt = true;
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                File.Copy(_fileName, dialog.FileName, true);
+            }
+
+            return true;
+        }
+
         public string FileName { get => _fileName; set => _fileName = value; }
-        public StreamWriter FileStream { get => _fileStream; set => _fileStream = value; }
+        public bool TempFileExist { get => _tempFileExist; set => _tempFileExist = value; }
+        public bool FileSaved { get => _fileSaved; set => _fileSaved = value; }
     }
 }

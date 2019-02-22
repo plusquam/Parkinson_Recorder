@@ -16,7 +16,7 @@ namespace Parkinson_Recorder
 
         // Serial config data
         public string selectedPort;
-        public string selectedBaudrate;
+        public int selectedBaudrate;
 
         // Charts config data
         public int numberOfPointsInChart;
@@ -41,6 +41,8 @@ namespace Parkinson_Recorder
         private FileIniDataParser _fileIniData = new FileIniDataParser();
         private ProgramConfigData _data = new ProgramConfigData();
 
+        private DateTime maxDateTime = DateTime.Now.Date;
+
         public ProgramConfig()
         {
             if (!Directory.Exists(@".\data"))
@@ -55,8 +57,8 @@ namespace Parkinson_Recorder
 
                 _data.tempMeasurementFilePath = parsedData.Sections[IniSections.PATHS].GetKeyData("tempMeasurementFilePath").Value;
 
-                _data.selectedPort = parsedData.Sections[IniSections.SERIAL].GetKeyData("selectedPort").Value;
-                _data.selectedBaudrate = parsedData.Sections[IniSections.SERIAL].GetKeyData("selectedBaudrate").Value;
+                //_data.selectedPort = parsedData.Sections[IniSections.SERIAL].GetKeyData("selectedPort").Value;
+                _data.selectedBaudrate = int.Parse(parsedData.Sections[IniSections.SERIAL].GetKeyData("selectedBaudrate").Value);
 
                 _data.numberOfPointsInChart = int.Parse(parsedData.Sections[IniSections.CHARTS].GetKeyData("numberOfPointsInChart").Value);
                 _data.numberOfFftPoints = int.Parse(parsedData.Sections[IniSections.CHARTS].GetKeyData("numberOfFftPoints").Value);
@@ -74,10 +76,20 @@ namespace Parkinson_Recorder
             else
             {
                 CreateConfigFile();
+
+                _data.tempMeasurementFilePath = @".\data\TempFile.csv";
+
+                _data.selectedBaudrate = 115200;
+
+                _data.numberOfPointsInChart = 128;
+                _data.numberOfFftPoints = 64;
+
+                _data.numberOfPatients = 3;
             }
         }
 
         internal ProgramConfigData Data { get => _data; set => _data = value; }
+        public DateTime MaxDateTime { get => maxDateTime; set => maxDateTime = value; }
 
         private bool CreateConfigFile()
         {
@@ -95,7 +107,7 @@ namespace Parkinson_Recorder
             dataToParse.Sections[IniSections.CHARTS].AddKey("numberOfFftPoints", "64");
 
             dataToParse.Sections.AddSection(IniSections.PATIENTS);
-            dataToParse.Sections[IniSections.PATIENTS].AddKey("numberOfPatients", "0");
+            dataToParse.Sections[IniSections.PATIENTS].AddKey("numberOfPatients", "3");
 
             _fileIniData.WriteFile(_configFilename, dataToParse);
 

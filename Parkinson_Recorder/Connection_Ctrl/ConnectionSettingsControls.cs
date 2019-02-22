@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
+using Parkinson_Recorder.Data_Processing;
 
 namespace Parkinson_Recorder
 {
@@ -9,9 +10,10 @@ namespace Parkinson_Recorder
     {
         private Connection_Ctrl.SerialCtrl _serialCtrl = new Parkinson_Recorder.Connection_Ctrl.SerialCtrl();
         private Data_Processing.ImuDataProcessing _imuData;
-        private string _oryginalFile = @"C:\Users\plusq\Desktop\data.txt";
-        private string _newFile = @"C:\Users\plusq\Desktop\pomiar3.txt";
-        private string _compareFile = @"C:\Users\plusq\Desktop\compare.txt";
+        private CsvParser _csvParser;
+        private Data_Processing.PatientData _patientData;
+
+        private bool _isRecording = false;
 
         private Thread _serialReadingThread;
         private static Mutex _readThreadMutex = new Mutex();
@@ -72,25 +74,32 @@ namespace Parkinson_Recorder
 
             while (true)
             {
-                if (_readThreadMutex.WaitOne(5))
-                    if (_runReadingThread)
-                    {
-                        _readThreadMutex.ReleaseMutex();
-                        if (DataReceived(_serialCtrl.SerialPort))
-                            emptyPackagesCounter = 0;
+                if (_serialCtrl.CheckConnection())
+                { 
+                    if (_readThreadMutex.WaitOne(5))
+                        if (_runReadingThread)
+                        {
+                            _readThreadMutex.ReleaseMutex();
+                            if (DataReceived(_serialCtrl.SerialPort))
+                                emptyPackagesCounter = 0;
+                            else
+                                emptyPackagesCounter++;
+                        }
                         else
-                            emptyPackagesCounter++;
-                    }
-                    else
-                    {
-                        _readThreadMutex.ReleaseMutex();
-                        break;
-                    }
+                        {
+                            _readThreadMutex.ReleaseMutex();
+                            break;
+                        }
 
-                if (emptyPackagesCounter > 30)
-                    Thread.Sleep(300);
+                    if (emptyPackagesCounter > 30)
+                        Thread.Sleep(300);
+                    else
+                        Thread.Sleep(10);
+                }
                 else
-                    Thread.Sleep(10);
+                {
+                    break;
+                }
             }
         }
 
@@ -123,6 +132,88 @@ namespace Parkinson_Recorder
             }
 
             return false;
+        }
+
+        private bool ReadPatientData(ref PatientData data)
+        {
+            string name, surname;
+
+            if (nameTextBox.Text.Length != 0)
+                name = nameTextBox.Text;
+            else
+            {
+                MessageBox.Show("Podaj imię pacjenta w zakładce danych pacjenta!", "Brak imienia pacjenta!",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (surnameTextBox.Text.Length != 0)
+                surname = surnameTextBox.Text;
+            else
+            {
+                MessageBox.Show("Podaj nazwisko pacjenta w zakładce danych pacjenta!", "Brak nazwiska pacjenta!",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            var date = birthDateTimePicker.Value.Date;
+            if (date == _programConfig.MaxDateTime)
+            {
+                MessageBox.Show("Podaj datę urodzenia pacjenta w zakładce danych pacjenta!", "Brak daty urodzenia pacjenta!",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            var genderName = (string)genderListBox.SelectedItem;
+            PatientData.Gender gender;
+            if (genderName == "Mężczyzna")
+                gender = PatientData.Gender.Man;
+            else if (genderName == "Kobieta")
+                gender = PatientData.Gender.Woman;
+            else
+            {
+                MessageBox.Show("Wybierz płeć pacjenta w zakładce danych pacjenta!", "Brak płci pacjenta!",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            data = new PatientData(name, surname, date, gender);
+
+            return true;
+        }
+
+        private bool StartMeasureSequence()
+        {
+            _imuData.Clear();
+            _ClearTimeChart();
+            _ClearFreqChart();
+
+            if (!_csvParser.TempFileExist)
+            {                
+                if(!ReadPatientData(ref _patientData))
+                    return false;
+                if (!_csvParser.InitializeCsvFile(_patientData))
+                    return false;
+            }
+
+            _csvParser.WriteNewMeasurement();
+
+            if (!_serialCtrl.SendStartCommand())
+                return false;
+
+            return true;
+        }
+
+        private bool StopMeasureSequence()
+        {
+            if (!_csvParser.TempFileExist)
+                return false;
+            if (!_serialCtrl.SendStopCommand())
+                return false;
+            Thread.Sleep(20);
+            _imuData.SaveData();
+
+            return true;
         }
     }
 }

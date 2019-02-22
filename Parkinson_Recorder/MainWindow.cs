@@ -9,21 +9,22 @@ namespace Parkinson_Recorder
 {
     public partial class ProgramMainWindow : Form
     {
-        private int _numberOfPointsInChart = 128;
-        private int _numberOfFFTPoints = 64;
-
-        private CsvParser _csvParser;
-        private Data_Processing.PatientData _patientData;
-
-        private bool _isRecording = false;
+        private int _numberOfPointsInChart;
+        private int _numberOfFFTPoints;
 
         private ProgramConfig _programConfig;
 
         public ProgramMainWindow()
         {
+            _programConfig = new ProgramConfig();
+
             InitializeComponent();
 
-            _programConfig = new ProgramConfig();
+            birthDateTimePicker.MaxDate = _programConfig.MaxDateTime;
+            birthDateTimePicker.Value = birthDateTimePicker.MaxDate;
+
+            _numberOfPointsInChart = _programConfig.Data.numberOfPointsInChart;
+            _numberOfFFTPoints = _programConfig.Data.numberOfFftPoints;
 
             SerialPortsListBox.DataSource = _serialCtrl.GetSerialPortsNames();
             BaudListBox.DataSource = _serialCtrl.BaudRates;
@@ -37,7 +38,6 @@ namespace Parkinson_Recorder
             _InitializeFreqChart();
 
             _csvParser = new CsvParser(_programConfig.Data.tempMeasurementFilePath, 3);
-            _csvParser.InitializeCsvFile();
         }
 
         ~ProgramMainWindow()
@@ -84,25 +84,42 @@ namespace Parkinson_Recorder
 
         private void StartStopMeasureButton_Click(object sender, EventArgs e)
         {
-            /*if (this.signalTimeChart.Enabled)
+            if (!_isRecording)
+            // Start measure sequence
             {
-                this.signalTimeChart.Enabled = false;
-                this.signalFrequencyChart.Enabled = false;
+                if (!StartMeasureSequence())
+                    return;
+
+                this.newMeasureButton.Enabled = false;
+                this.saveMeasureButton.Enabled = false;
+                this.ConnectButton.Enabled = false;
+                this.DisconnectButton.Enabled = false;
+
+                this.nameTextBox.Enabled = false;
+                this.surnameTextBox.Enabled = false;
+                this.genderListBox.Enabled = false;
+                this.birthDateTimePicker.Enabled = false;
+
+                _csvParser.FileSaved = false;
+
+                this.startStopMeasureButton.Image = Properties.Resources.stop_64;
             }
             else
+            // Stop measure sequence
             {
-                this.signalTimeChart.Enabled = true;
-                this._dataChartsTimerInstance.ResetStartTime();
-                this.signalTimeChart.Series[0].Points.Clear();
-                this.signalFrequencyChart.Enabled = true;
-            }*/
+                if (!StopMeasureSequence())
+                    return;
+
+                this.newMeasureButton.Enabled = true;
+                if(_csvParser.TempFileExist)
+                    this.saveMeasureButton.Enabled = true;
+                this.ConnectButton.Enabled = true;
+                this.DisconnectButton.Enabled = true;
+
+                this.startStopMeasureButton.Image = Properties.Resources.record_64;
+            }
 
             _isRecording = !_isRecording;
-
-            if (_isRecording)
-                this.startStopMeasureButton.Image = Properties.Resources.stop_64;
-            else
-                this.startStopMeasureButton.Image = Properties.Resources.record_64;
         }
 
         private void ShowFrequencyChartButton_Click(object sender, EventArgs e)
@@ -169,7 +186,12 @@ namespace Parkinson_Recorder
 
         private void newMeasureButton_Click(object sender, EventArgs e)
         {
-            _serialCtrl.SendData("test");
+            this.nameTextBox.Enabled = true;
+            this.surnameTextBox.Enabled = true;
+            this.genderListBox.Enabled = true;
+            this.birthDateTimePicker.Enabled = true;
+
+            _csvParser.FileSaved = false;
         }
 
         private void openMeasureButton_Click(object sender, EventArgs e)
@@ -179,14 +201,7 @@ namespace Parkinson_Recorder
 
         private void saveMeasureButton_Click(object sender, EventArgs e)
         {
-            //String[] linesA = System.IO.File.ReadAllLines(_oryginalFile);
-            //String[] linesB = System.IO.File.ReadAllLines(_newFile);
-
-            //IEnumerable<String> onlyB = linesB.Except(linesA);
-
-            //System.IO.File.WriteAllLines(_compareFile, onlyB);
-
-            //MessageBox.Show("Comparing Done");
+            _csvParser.SaveFile();
         }
 
         private void serialWatchdogTimer_Tick(object sender, EventArgs e)
@@ -218,6 +233,11 @@ namespace Parkinson_Recorder
         private void ProgramMainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             DisconnectButton_Click(this, EventArgs.Empty);
+        }
+
+        private void PatientDataChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("Patient data changed.");
         }
     }
 }

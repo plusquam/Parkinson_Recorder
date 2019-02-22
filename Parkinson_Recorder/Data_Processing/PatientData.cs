@@ -14,20 +14,20 @@ namespace Parkinson_Recorder.Data_Processing
         private string _name;
         private string _surname;
         private DateTime _birthDate;
-        private Gender _currentGender;
+        private Gender _gender;
 
         public PatientData(string name, string surname, DateTime birthDate, Gender gender)
         {
             _name = name;
             _surname = surname;
             _birthDate = birthDate;
-            _currentGender = gender;
+            _gender = gender;
         }
 
         public string Name { get => _name; set => _name = value; }
         public string Surname { get => _surname; set => _surname = value; }
         public DateTime BirthDate { get => _birthDate; set => _birthDate = value; }
-        public Gender CurrentGender { get => _currentGender; set => _currentGender = value; }
+        public Gender GetGender { get => _gender; set => _gender = value; }
         public int PatientID { get => _patientID; set => _patientID = value; }
     }
 }
